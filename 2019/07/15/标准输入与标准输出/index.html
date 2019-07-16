@@ -2,23 +2,24 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>Hello World - Hexo</title>
+<title>【C++基础篇】标准输入与标准输出 - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="概述C语言中使用函数scanf和printf作为标准输入和输出，在C++中引入了类cin和cout进行标准输入和输出，所需头文件为，命名空间是std。这里所说的标准输入和输出是相对程序而言，输入是通过IO设备，如键盘输入到程序，输出是指输出到IO设备，如程序输出到屏幕。">
+<meta name="keywords" content="标准输入与输出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/07/15/hello-world/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:title" content="【C++基础篇】标准输入与标准输出">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/标准输入与标准输出/index.html">
+<meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="概述C语言中使用函数scanf和printf作为标准输入和输出，在C++中引入了类cin和cout进行标准输入和输出，所需头文件为，命名空间是std。这里所说的标准输入和输出是相对程序而言，输入是通过IO设备，如键盘输入到程序，输出是指输出到IO设备，如程序输出到屏幕。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-15T07:51:21.891Z">
+<meta property="og:updated_time" content="2019-07-16T05:31:47.001Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="【C++基础篇】标准输入与标准输出">
+<meta name="twitter:description" content="概述C语言中使用函数scanf和printf作为标准输入和输出，在C++中引入了类cin和cout进行标准输入和输出，所需头文件为，命名空间是std。这里所说的标准输入和输出是相对程序而言，输入是通过IO设备，如键盘输入到程序，输出是指输出到IO设备，如程序输出到屏幕。">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -27,7 +28,7 @@
 
 
 
-<link rel="icon" href="/images/favicon.svg">
+<link rel="icon" href="/images/QRcode.jpg">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
@@ -68,6 +69,16 @@
 
     
     
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?9e3857fa6d9fdc3e03bcaa7fc24e4f49";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
     
     
 
@@ -93,7 +104,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Hello World" height="28">
+                <img src="/images/logo.svg" alt="【C++基础篇】标准输入与标准输出" height="28">
             
             </a>
         </div>
@@ -101,15 +112,15 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item" href="/">Home</a>
+                <a class="navbar-item" href="/">主页</a>
                 
-                <a class="navbar-item" href="/archives">Archives</a>
+                <a class="navbar-item" href="/archives">归档</a>
                 
-                <a class="navbar-item" href="/categories">Categories</a>
+                <a class="navbar-item" href="/categories">分类</a>
                 
-                <a class="navbar-item" href="/tags">Tags</a>
+                <a class="navbar-item" href="/tags">标签</a>
                 
-                <a class="navbar-item" href="/about">About</a>
+                <a class="navbar-item" href="/about">关于</a>
                 
             </div>
             
@@ -144,13 +155,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-15T07:51:21.891Z">2019-07-15</time>
+                <time class="level-item has-text-grey" datetime="2019-07-15T08:59:46.000Z">2019-07-15</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
+                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    a minute read (About 121 words)
+                    6 minutes read (About 836 words)
                 </span>
                 
                 
@@ -159,24 +174,55 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Hello World
+                【C++基础篇】标准输入与标准输出
             
         </h1>
         <div class="content">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="hljs-string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>C语言中使用函数scanf和printf作为标准输入和输出，在C++中引入了类cin和cout进行标准输入和输出，所需头文件为<iostream>，命名空间是std。这里所说的标准输入和输出是相对程序而言，输入是通过IO设备，如键盘输入到程序，输出是指输出到IO设备，如程序输出到屏幕。</iostream></p>
+<a id="more"></a>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="标准输入"><a href="#标准输入" class="headerlink" title="标准输入"></a>标准输入</h2><p>cin是标准输入流对象，是istream类的对象。cin是从缓冲区读取数据，如果缓冲区数据为空，cin对象的成员函数就会阻塞等待数据到来，直到检测到缓冲区有数据了才去读取。</p>
+<p>开发过程中经常用到cin &gt;&gt;abc, cin.get()，cin.getline()</p>
+<h4 id="cin-gt-gt-abc"><a href="#cin-gt-gt-abc" class="headerlink" title="cin&gt;&gt;abc"></a>cin&gt;&gt;abc</h4><p>abc为cin接受的类型，经常用到的是变量，先看张图：</p>
+<p><img src="/img/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA01.jpg" alt="avatar"></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"> </span><br><span class="line">using namespace std;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">     int a;</span><br><span class="line">     short b;</span><br><span class="line">     char c;</span><br><span class="line"> </span><br><span class="line">    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line"> </span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; c &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>运行输入11[空格/回车]22[空格/回车]a[回车]，程序输出结果如下：</p>
+<p><img src="/img/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA02.png" alt="avatar"></p>
+<h4 id="cin-get"><a href="#cin-get" class="headerlink" title="cin.get()"></a>cin.get()</h4><p>表示获取输入的一个字符，常用方式如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">char a;</span><br><span class="line">a = cin.get();</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">char b;</span><br><span class="line">cin.get(b);</span><br><span class="line">cout &lt;&lt; b &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h4 id="cin-getline"><a href="#cin-getline" class="headerlink" title="cin.getline():"></a>cin.getline():</h4><p>表示读取多个字符，包括空白字符。直到读满N-1个，或遇到指定的结束符为止。可以指定结束符，默认结束符为’\0’。</p>
+<p>用法：</p>
+<p>cin.getline(字符指针(char*),字符个数N(int),结束符(char));</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//使用默认结束符</span><br><span class="line">char a[32] = &#123;0&#125;;</span><br><span class="line">cin.getline(a, 3);</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">//指定结束符为&apos;p&apos;</span><br><span class="line">char b[32] = &#123;0&#125;;</span><br><span class="line">cin.getline(b, 12, &apos;p&apos;);</span><br><span class="line">cout &lt;&lt; b &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h2 id="标准输出"><a href="#标准输出" class="headerlink" title="标准输出"></a>标准输出</h2><p>cout是标准输入流对象，是ostream类的对象。</p>
+<p>cout对象属性包括一个插入运算符(&lt;&lt;)，右侧的信息可以插入到流中。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//简单使用</span><br><span class="line">cout &lt;&lt; &quot;this is cout!&quot; &lt;&lt; endl;  //控制符endl，光标会另起一行</span><br></pre></td></tr></table></figure>
 
+<p>进制输出：</p>
+<p>dec:十进制输出整数，效果所及：长效，头文件：<iostream></iostream></p>
+<p>hex:十六进制输出整数，效果所及：长效，头文件：<iostream></iostream></p>
+<p>oct:八进制输出整数，效果所及：长效，头文件：<iostream></iostream></p>
+<p>长效意思：设置后对以后所有的输入输出有效，直到重新设置为止。</p>
+<p>短效：只对当前输入输出有效。</p>
+<p>setbase(n) :表示以 n 进制显示，头文件&lt; iomanip &gt; 中，n 只能取 8, 10, 16 三个值</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int a = 28;</span><br><span class="line"> </span><br><span class="line">//十进制输出</span><br><span class="line">cout &lt;&lt; dec &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">//十六进制输出</span><br><span class="line">cout &lt;&lt; hex &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">//八进制输出</span><br><span class="line">cout &lt;&lt; oct &lt;&lt; a &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">//设置十进制输出</span><br><span class="line">cout &lt;&lt; setbase(10);</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">//设置字符为大写</span><br><span class="line">cout &lt;&lt; setiosflags(ios::uppercase) ;</span><br><span class="line">cout &lt;&lt; hex &lt;&lt; a &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<p>setw(int n):设置输出数据的域宽为n，靠域宽右侧显示，域余填充空格，数据超出域宽按实际数据显示。效果所及：短效，头文件<iomanip>。</iomanip></p>
+<p>setfill(char c):对输出域余用字符c填充。效果所及：长效，头文件<iomanip>。</iomanip></p>
+<p>setprecision(int n):设置输出精度为n，float最多可取6位有效数，double最多可取15位有效数。效果所及：长效，头文件<iomanip>。</iomanip></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/标准输入与输出/">标准输入与输出</a>
+                </div>
+            </div>
         </div>
         
         
@@ -192,28 +238,13 @@
         <div class="buttons is-centered">
             
                 
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
-
-<div class="notification is-danger">
-    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                
-<div class="notification is-danger">
-    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
-</div>
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="Wechat"></div>
+</a>
 
                 
         </div>
@@ -221,20 +252,6 @@
 </div>
 
 
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/15/【C-基础篇】标准输入与标准输出/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">【C++基础篇】标准输入与标准输出</span>
-            </a>
-        </div>
-        
-        
-    </div>
-</div>
 
 
 </div>
@@ -252,22 +269,22 @@
             <div class="level-item has-text-centered" style="flex-shrink: 1">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Your name">
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="码农code之路">
                     
                     
                     <p class="is-size-4 is-block">
-                        Your name
+                        码农code之路
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        Your title
+                        红烧肉
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
+                        <span>北京.西二旗</span>
                     </p>
                     
                 </div>
@@ -277,30 +294,30 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Posts
+                        Post
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        1
                     </p>
                 </div>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Categories
+                        Category
                     </p>
                     <p class="title has-text-weight-normal">
-                        0
+                        1
                     </p>
                 </div>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Tags
+                        Tag
                     </p>
                     <p class="title has-text-weight-normal">
-                        0
+                        1
                     </p>
                 </div>
             </div>
@@ -361,23 +378,12 @@
         <ul class="menu-list">
         
             <li>
-                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                <a class="level is-mobile" href="https://blog.csdn.net/woniu211111" target="_blank">
                     <span class="level-left">
-                        <span class="level-item">Hexo</span>
+                        <span class="level-item">CSDN</span>
                     </span>
                     <span class="level-right">
-                        <span class="level-item tag">hexo.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
-                    <span class="level-left">
-                        <span class="level-item">PPOffice</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">github.com</span>
+                        <span class="level-item tag">blog.csdn.net</span>
                     </span>
                 </a>
             </li>
@@ -397,13 +403,30 @@
                 Categories
             </h3>
             <ul class="menu-list">
-            
+            <li>
+        <a class="level is-marginless" href="/categories/C-基础/">
+            <span class="level-start">
+                <span class="level-item">C++基础</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
             </ul>
         </div>
     </div>
 </div>
     
         
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/标准输入与输出/" style="font-size: 10px;">标准输入与输出</a>
+    </div>
+</div>
+
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
@@ -417,7 +440,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/15/【C-基础篇】标准输入与标准输出/" class="media-left">
+            <a href="/2019/07/15/标准输入与标准输出/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="【C++基础篇】标准输入与标准输出">
                 </p>
@@ -426,28 +449,9 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T08:59:46.000Z">2019-07-15</time></div>
-                    <a href="/2019/07/15/【C-基础篇】标准输入与标准输出/" class="has-link-black-ter is-size-6">【C++基础篇】标准输入与标准输出</a>
+                    <a href="/2019/07/15/标准输入与标准输出/" class="has-link-black-ter is-size-6">【C++基础篇】标准输入与标准输出</a>
                     <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/07/15/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T07:51:21.891Z">2019-07-15</time></div>
-                    <a href="/2019/07/15/hello-world/" class="has-link-black-ter is-size-6">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
                 </div>
             </div>
@@ -471,7 +475,7 @@
                     <span class="level-item">July 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -488,6 +492,13 @@
                 Tags
             </h3>
             <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
                 
             </div>
         </div>
@@ -514,7 +525,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/15/【C-基础篇】标准输入与标准输出/" class="media-left">
+            <a href="/2019/07/15/标准输入与标准输出/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="【C++基础篇】标准输入与标准输出">
                 </p>
@@ -523,28 +534,9 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T08:59:46.000Z">2019-07-15</time></div>
-                    <a href="/2019/07/15/【C-基础篇】标准输入与标准输出/" class="has-link-black-ter is-size-6">【C++基础篇】标准输入与标准输出</a>
+                    <a href="/2019/07/15/标准输入与标准输出/" class="has-link-black-ter is-size-6">【C++基础篇】标准输入与标准输出</a>
                     <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/07/15/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-15T07:51:21.891Z">2019-07-15</time></div>
-                    <a href="/2019/07/15/hello-world/" class="has-link-black-ter is-size-6">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
                 </div>
             </div>
@@ -568,7 +560,7 @@
                     <span class="level-item">July 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -585,6 +577,13 @@
                 Tags
             </h3>
             <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
                 
             </div>
         </div>
@@ -603,11 +602,11 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Hello World" height="28">
+                    <img src="/images/logo.svg" alt="【C++基础篇】标准输入与标准输出" height="28">
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2019 John Doe&nbsp;
+                &copy; 2019 红烧肉&nbsp;
                 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
                 
                 </p>
@@ -647,6 +646,18 @@
         </div>
     </div>
 </footer>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9e3857fa6d9fdc3e03bcaa7fc24e4f49";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("en");</script>
