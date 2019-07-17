@@ -2,20 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签 - 码农code之路个人博客</title>
+<title>const关键字 - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="keywords" content="new,delete,内联函数,函数重载,malloc,free,命名空间,标准输入与输出,类的分离式写法,构造函数,析构函数,浅拷贝,深拷贝,const,友元">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码农code之路个人博客">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+    <meta name="description" content="C++中const关键字无处不在，我这里做下汇总，作为工具文章方便翻阅。">
+<meta name="keywords" content="const">
+<meta property="og:type" content="article">
+<meta property="og:title" content="const关键字">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/10const关键字/index.html">
 <meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="C++中const关键字无处不在，我这里做下汇总，作为工具文章方便翻阅。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-17T09:58:46.008Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码农code之路个人博客">
+<meta name="twitter:title" content="const关键字">
+<meta name="twitter:description" content="C++中const关键字无处不在，我这里做下汇总，作为工具文章方便翻阅。">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -90,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                <img src="/images/logo.svg" alt="const关键字" height="28">
             
             </a>
         </div>
@@ -104,7 +108,7 @@
                 
                 <a class="navbar-item" href="/categories">分类</a>
                 
-                <a class="navbar-item is-active" href="/tags">标签</a>
+                <a class="navbar-item" href="/tags">标签</a>
                 
                 <a class="navbar-item" href="/about">关于</a>
                 
@@ -135,123 +139,128 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                标签
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-17T09:53:46.000Z">2019-07-17</time>
                 
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/const/">
-                        <span class="tag">const</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                 </div>
                 
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/delete/">
-                        <span class="tag">delete</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
                 
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/free/">
-                        <span class="tag">free</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 487 个字)
+                </span>
                 
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/malloc/">
-                        <span class="tag">malloc</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/new/">
-                        <span class="tag">new</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/内联函数/">
-                        <span class="tag">内联函数</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/函数重载/">
-                        <span class="tag">函数重载</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/友元/">
-                        <span class="tag">友元</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/命名空间/">
-                        <span class="tag">命名空间</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/构造函数/">
-                        <span class="tag">构造函数</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/析构函数/">
-                        <span class="tag">析构函数</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/标准输入与输出/">
-                        <span class="tag">标准输入与输出</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/浅拷贝/">
-                        <span class="tag">浅拷贝</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/深拷贝/">
-                        <span class="tag">深拷贝</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/类的分离式写法/">
-                        <span class="tag">类的分离式写法</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
                 
             </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                const关键字
+            
+        </h1>
+        <div class="content">
+            <p>C++中const关键字无处不在，我这里做下汇总，作为工具文章方便翻阅。</p>
+<a id="more"></a>
+
+<h2 id="一：修饰数据成员"><a href="#一：修饰数据成员" class="headerlink" title="一：修饰数据成员"></a>一：修饰数据成员</h2><p>修饰的成员一单定义初始化后不能再进行修改，如：</p>
+<p>const int a = 10;</p>
+<p>a =20; //重新赋值直接会报错</p>
+<p>当修饰类的成员函数时，先来段错误的代码</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Student(int i)</span><br><span class="line">    &#123;</span><br><span class="line">        this-&gt;age = i; //age是const类型直接复制会报错</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    const int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>解决上面的错误有两种方法</p>
+<h5 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h5><p>使用参数列表的形式(推荐使用)</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Student(int i):age(i)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    const int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h5><p>定义age时直接赋值</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Student ();</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    const int age = 20;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二：修饰成员函数"><a href="#二：修饰成员函数" class="headerlink" title="二：修饰成员函数"></a>二：修饰成员函数</h2><p>在声明之后，实现体之前</p>
+<p>格式为：</p>
+<p>类型 函数名(参数….) const</p>
+<p>const修饰的成员函数不能修改类中的成员函数，函数中只能调用const修饰的函数。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Student (int i ):age(i)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void update () const</span><br><span class="line">    &#123;</span><br><span class="line">        age = age +1;   //const 修饰的成员函数不能修改类中的成员变量</span><br><span class="line">        display();      //const 修饰的成员函数，函数中只能调用const修饰的成员函数</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void display()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;age:&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三：修饰类对象"><a href="#三：修饰类对象" class="headerlink" title="三：修饰类对象"></a>三：修饰类对象</h2><p>const修饰的对象，只能调用const修饰的成员函数</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Student (int i ):age(i)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void update () const</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;this is update&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void display()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;age:&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    int age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const Student stu(30);</span><br><span class="line">    stu.update();</span><br><span class="line">    stu.display();    //const修饰的类对象 只能调用const修饰的成员函数</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>成员函数有无const修饰可以构成重载，非const对象调用时优先调用非const修饰的成员函数，如不构成重载也可以调用const修饰成员函数。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Student (int i ):age(i)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void display()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;void display()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void display() const</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;display() const&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    int age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Student stu(30);</span><br><span class="line">    stu.display();</span><br><span class="line"></span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 输出结果：</p>
+<p><img src="/img/const%E5%85%B3%E9%94%AE%E5%AD%9701.png" alt></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/const/">const</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
     </div>
-</div></div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/17/11友元/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">友元</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/17/09拷贝构造函数，浅拷贝和深拷贝/">
+                <span class="level-item">拷贝构造函数，浅拷贝和深拷贝</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
                 
 
 
@@ -947,7 +956,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                    <img src="/images/logo.svg" alt="const关键字" height="28">
                 
                 </a>
                 <p class="is-size-7">
