@@ -2,19 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>归档: 2019/7 - 码农code之路个人博客</title>
+<title>构造函数与析构函数 - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="码农code之路个人博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+    <meta name="description" content="1.构造函数是种特殊的类成员函数，遵循如下规则： a.函数名与类名必须相同。  b.没有返回值">
+<meta name="keywords" content="构造函数,析构函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构造函数与析构函数">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/08构造函数与析构函数/index.html">
 <meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="1.构造函数是种特殊的类成员函数，遵循如下规则： a.函数名与类名必须相同。  b.没有返回值">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-17T07:08:30.516Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码农code之路个人博客">
+<meta name="twitter:title" content="构造函数与析构函数">
+<meta name="twitter:description" content="1.构造函数是种特殊的类成员函数，遵循如下规则： a.函数名与类名必须相同。  b.没有返回值">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -89,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                <img src="/images/logo.svg" alt="构造函数与析构函数" height="28">
             
             </a>
         </div>
@@ -134,168 +139,112 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="tag is-link">
-        七月 2019
-        </h3>
-        <div class="timeline">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
         
-            <article class="media">
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-17T04:47:46.000Z">2019-07-17</time>
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:47:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/08构造函数与析构函数/" class="has-link-black-ter is-size-6">构造函数与析构函数</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                 </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:42:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/07类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:36:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/06命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 507 个字)
+                </span>
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:30:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:28:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/04new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T03:22:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/03内联函数/" class="has-link-black-ter is-size-6">内联函数</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-16T08:59:46.000Z">2019-07-16</time>
-                        <a href="/2019/07/16/02函数重载/" class="has-link-black-ter is-size-6">函数重载</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-15T08:59:46.000Z">2019-07-15</time>
-                        <a href="/2019/07/15/01标准输入与标准输出/" class="has-link-black-ter is-size-6">标准输入与标准输出</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
+            </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                构造函数与析构函数
+            
+        </h1>
+        <div class="content">
+            <p>1.构造函数是种特殊的类成员函数，遵循如下规则：</p>
+<pre><code>a.函数名与类名必须相同。
+
+b.没有返回值</code></pre><a id="more"></a>
+
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">例如：</span><br><span class="line">class Obj</span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">public:</span><br><span class="line">      Obj()</span><br><span class="line">      &#123;</span><br><span class="line">         ...</span><br><span class="line">      &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>2.构造函数可以带参数，也可以重载</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Obj</span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">public:</span><br><span class="line">      Obj()</span><br><span class="line">      &#123;</span><br><span class="line">        ...</span><br><span class="line">      &#125;</span><br><span class="line">      Obj(int x, int y)</span><br><span class="line">      &#123;</span><br><span class="line">        ...</span><br><span class="line">      &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>3.构造函数和普通成员函数不一样，一般不显示调用。在创建一个对象时，构造函数自动调用(<font color="red" size="3" face="宋体">编译器来完成</font>)。</p>
+<h3 id="析构函数-destructor"><a href="#析构函数-destructor" class="headerlink" title="析构函数(destructor)"></a>析构函数(destructor)</h3><p>1.析构和构造是一对相反的过程，对象被创建时调用构造函数，对象被销毁时调用析构函数，遵循如下规则：</p>
+<pre><code>a.名称固定，类名前加上波浪线~
+
+b.没有返回值
+
+c.不能带参数</code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">例如，</span><br><span class="line">class Obj</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ~Obj()</span><br><span class="line">     &#123;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>2.析构函数只能有一个，不允许重载。</p>
+<p>3.析构函数不显示调用，对象销毁时编译器自动调用。</p>
+<h3 id="重新实现链表-使用类，构造和析构函数"><a href="#重新实现链表-使用类，构造和析构函数" class="headerlink" title="重新实现链表(使用类，构造和析构函数)"></a>重新实现链表(使用类，构造和析构函数)</h3><p>创建DataObj.h头文件</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#ifndef _OBJECT_H_</span><br><span class="line">#define _OBJECT_H_</span><br><span class="line"> </span><br><span class="line">struct Student</span><br><span class="line">&#123;</span><br><span class="line">	char name[32];</span><br><span class="line">	int  age;</span><br><span class="line">	Student* pNext;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">class DataObj</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	DataObj();</span><br><span class="line">	~DataObj();</span><br><span class="line">	void add(Student* pStu);</span><br><span class="line">	void find(int age);</span><br><span class="line">	void printNode(Student* pNode);</span><br><span class="line">private:</span><br><span class="line">	Student m_head;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>创建DataObj.cpp源文件</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &quot;DataObj.h&quot;</span><br><span class="line"> </span><br><span class="line">//构造有头链表</span><br><span class="line">DataObj::DataObj()</span><br><span class="line">&#123;</span><br><span class="line">	m_head.pNext = NULL;</span><br><span class="line">&#125;</span><br><span class="line">DataObj::~DataObj()</span><br><span class="line">&#123;</span><br><span class="line">	//指向每个节点的头部</span><br><span class="line">	Student* p = m_head.pNext;</span><br><span class="line"> </span><br><span class="line">	//释放所有节点</span><br><span class="line">	while(p)</span><br><span class="line">	&#123;</span><br><span class="line">		Student *next = p-&gt;pNext;</span><br><span class="line">		free(p);</span><br><span class="line">		p = next;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">void DataObj::add(Student* pNode)</span><br><span class="line">&#123;</span><br><span class="line">	//指向每个节点的头部</span><br><span class="line">	Student* p = &amp;m_head;</span><br><span class="line"> </span><br><span class="line">	//通过头节点查找到链表尾部节点</span><br><span class="line">	while (p)</span><br><span class="line">	&#123;</span><br><span class="line">		if (p-&gt;pNext == NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		p = p-&gt;pNext;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//添加节点到尾部</span><br><span class="line">	p-&gt;pNext = pNode;</span><br><span class="line">&#125;</span><br><span class="line">void DataObj::find(int age)</span><br><span class="line">&#123;</span><br><span class="line">	//标记是否找到</span><br><span class="line">	bool bFind = false;</span><br><span class="line"> </span><br><span class="line">	Student* p = &amp;m_head;</span><br><span class="line">	while(p)</span><br><span class="line">	&#123;</span><br><span class="line">		if (p-&gt;age == age)</span><br><span class="line">		&#123;</span><br><span class="line">			bFind = true;</span><br><span class="line">			printNode(p);</span><br><span class="line">		&#125;</span><br><span class="line">		p = p-&gt;pNext;</span><br><span class="line">	&#125;</span><br><span class="line">	if (!bFind)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有找到该age的节点&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void DataObj::printNode(Student* pNode)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;name = %s, age = %d\n&quot;, pNode-&gt;name, pNode-&gt;age);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//构造节点</span><br><span class="line">	Student* pStu = (Student*) malloc(sizeof(Student));</span><br><span class="line">	strcpy(pStu-&gt;name, &quot;aaaa&quot;);</span><br><span class="line">	pStu-&gt;age = 30;</span><br><span class="line">	pStu-&gt;pNext = NULL;</span><br><span class="line"> </span><br><span class="line">	&#123;</span><br><span class="line">		DataObj dataObj;</span><br><span class="line"> </span><br><span class="line">		//添加节点</span><br><span class="line">		dataObj.add(pStu);</span><br><span class="line"> </span><br><span class="line">		//查找节点</span><br><span class="line">		dataObj.find(31);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/构造函数/">构造函数</a>, <a class="has-link-grey -link" href="/tags/析构函数/">析构函数</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/17/07类的分离式写法/">
+                <span class="level-item">类的分离式写法</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
     </div>
 </div>
 
@@ -940,7 +889,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                    <img src="/images/logo.svg" alt="构造函数与析构函数" height="28">
                 
                 </a>
                 <p class="is-size-7">

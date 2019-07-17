@@ -2,19 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>归档: 2019/7 - 码农code之路个人博客</title>
+<title>内联函数 - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="码农code之路个人博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+    <meta name="description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
+<meta name="keywords" content="内联函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内联函数">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/03内联函数/index.html">
 <meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-17T03:30:14.916Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码农code之路个人博客">
+<meta name="twitter:title" content="内联函数">
+<meta name="twitter:description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -89,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                <img src="/images/logo.svg" alt="内联函数" height="28">
             
             </a>
         </div>
@@ -134,168 +139,103 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="tag is-link">
-        七月 2019
-        </h3>
-        <div class="timeline">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
         
-            <article class="media">
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-17T03:22:46.000Z">2019-07-17</time>
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:47:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/08构造函数与析构函数/" class="has-link-black-ter is-size-6">构造函数与析构函数</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                 </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:42:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/07类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:36:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/06命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 289 个字)
+                </span>
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:30:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:28:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/04new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T03:22:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/03内联函数/" class="has-link-black-ter is-size-6">内联函数</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-16T08:59:46.000Z">2019-07-16</time>
-                        <a href="/2019/07/16/02函数重载/" class="has-link-black-ter is-size-6">函数重载</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-15T08:59:46.000Z">2019-07-15</time>
-                        <a href="/2019/07/15/01标准输入与标准输出/" class="has-link-black-ter is-size-6">标准输入与标准输出</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
+            </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                内联函数
+            
+        </h1>
+        <div class="content">
+            <p>函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。</p>
+<a id="more"></a> 
+
+
+<p>如果一个函数在程序运行过程中被成千上万次调用，那么这个开销也是不容忽视的，C++中引入了内联函数，直接在函数前面加上inline，在编译过程中直接把函数代码内嵌，避免了运行过程中的函数调用，但会增加程序代码段的空间。可以任务以空间来换取时间。</p>
+<h6 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h6><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline int foo(int a, int b) </span><br><span class="line">&#123; </span><br><span class="line">    return a+b; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>###总结<br>内联函数优点：程序运行时避免了调用函数入栈，出栈导致的额外开销。</p>
+<p>内联函数缺点：编译时直接函数代码内嵌，增加了代码段空间。</p>
+<p>一般函数体行数不多(谷歌编程规范明确指出内联函数不超过10行代码)，且被频繁调用的函数适合用内联函数。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/内联函数/">内联函数</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/07/17/04new和delete/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">new和delete</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/16/02函数重载/">
+                <span class="level-item">函数重载</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
     </div>
 </div>
 
@@ -940,7 +880,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                    <img src="/images/logo.svg" alt="内联函数" height="28">
                 
                 </a>
                 <p class="is-size-7">

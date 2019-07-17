@@ -2,19 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>归档: 2019/7 - 码农code之路个人博客</title>
+<title>类的分离式写法 - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="码农code之路个人博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+    <meta name="description" content="类的分离式写法，使得代码更加规范，增强了阅读性。 分离式写法的规则： 1.类的变量：写在类的里面">
+<meta name="keywords" content="类的分离式写法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类的分离式写法">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/类的分离式写法/index.html">
 <meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="类的分离式写法，使得代码更加规范，增强了阅读性。 分离式写法的规则： 1.类的变量：写在类的里面">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-17T04:45:31.049Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码农code之路个人博客">
+<meta name="twitter:title" content="类的分离式写法">
+<meta name="twitter:description" content="类的分离式写法，使得代码更加规范，增强了阅读性。 分离式写法的规则： 1.类的变量：写在类的里面">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -89,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                <img src="/images/logo.svg" alt="类的分离式写法" height="28">
             
             </a>
         </div>
@@ -113,7 +118,7 @@
                 
                     
                     
-                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://woniu201.github.io">
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
                         
                         <i class="fab fa-github"></i>
                         
@@ -134,168 +139,97 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="tag is-link">
-        七月 2019
-        </h3>
-        <div class="timeline">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
         
-            <article class="media">
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-17T04:42:46.000Z">2019-07-17</time>
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:47:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/08构造函数与析构函数/" class="has-link-black-ter is-size-6">构造函数与析构函数</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                 </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:42:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/07类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:36:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/06命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 193 个字)
+                </span>
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:30:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T04:28:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/04new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-17T03:22:46.000Z">2019-07-17</time>
-                        <a href="/2019/07/17/03内联函数/" class="has-link-black-ter is-size-6">内联函数</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-16T08:59:46.000Z">2019-07-16</time>
-                        <a href="/2019/07/16/02函数重载/" class="has-link-black-ter is-size-6">函数重载</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-07-15T08:59:46.000Z">2019-07-15</time>
-                        <a href="/2019/07/15/01标准输入与标准输出/" class="has-link-black-ter is-size-6">标准输入与标准输出</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
+            </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                类的分离式写法
+            
+        </h1>
+        <div class="content">
+            <p>类的分离式写法，使得代码更加规范，增强了阅读性。</p>
+<p>分离式写法的规则：</p>
+<p>1.类的变量：写在类的里面</p>
+<a id="more"></a>
+
+<p>2.成员函数：类中写函数的声明，函数的定义写在类体外。</p>
+<p>3.写在类外函数定义时，类名前加限定(Object: :)，其中，   ::理解为表示范围的符号。</p>
+<h3 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h3><p>头文件：Object.h</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#ifndef _OBJECT_H_</span><br><span class="line">#define _OBJECT_H_</span><br><span class="line"> </span><br><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	char name[32];</span><br><span class="line">	int  age;</span><br><span class="line"> </span><br><span class="line">public:</span><br><span class="line">	void SetName(char* pName);</span><br><span class="line">	void SetAge(int age);</span><br><span class="line">	void Printf_Stu();</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>源文件：Object.cpp</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &quot;Object.h&quot;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">void Student::SetName(char* pName)</span><br><span class="line">&#123;</span><br><span class="line">	strcpy(this-&gt;name, pName);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">void Student::SetAge(int age)</span><br><span class="line">&#123;</span><br><span class="line">	this-&gt;age = age;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">void Student::Printf_Stu()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;name = %s, age = %d\n&quot;, this-&gt;name, this-&gt;age);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	Student stu;</span><br><span class="line">	stu.SetName(&quot;aaaa&quot;);</span><br><span class="line">	stu.SetAge(30);</span><br><span class="line">	stu.Printf_Stu();</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/类的分离式写法/">类的分离式写法</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/17/命名空间(namespace)/">
+                <span class="level-item">命名空间(namespace)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
     </div>
 </div>
 
@@ -343,7 +277,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        8
+                        7
                     </p>
                 </div>
             </div>
@@ -363,7 +297,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        9
                     </p>
                 </div>
             </div>
@@ -455,7 +389,7 @@
                 <span class="level-item">C++基础</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li>
             </ul>
@@ -469,7 +403,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/delete/" style="font-size: 10px;">delete</a> <a href="/tags/free/" style="font-size: 10px;">free</a> <a href="/tags/malloc/" style="font-size: 10px;">malloc</a> <a href="/tags/new/" style="font-size: 10px;">new</a> <a href="/tags/内联函数/" style="font-size: 10px;">内联函数</a> <a href="/tags/函数重载/" style="font-size: 10px;">函数重载</a> <a href="/tags/命名空间/" style="font-size: 10px;">命名空间</a> <a href="/tags/构造函数/" style="font-size: 10px;">构造函数</a> <a href="/tags/析构函数/" style="font-size: 10px;">析构函数</a> <a href="/tags/标准输入与输出/" style="font-size: 10px;">标准输入与输出</a> <a href="/tags/类的分离式写法/" style="font-size: 10px;">类的分离式写法</a>
+        <a href="/tags/delete/" style="font-size: 10px;">delete</a> <a href="/tags/free/" style="font-size: 10px;">free</a> <a href="/tags/malloc/" style="font-size: 10px;">malloc</a> <a href="/tags/new/" style="font-size: 10px;">new</a> <a href="/tags/内联函数/" style="font-size: 10px;">内联函数</a> <a href="/tags/函数重载/" style="font-size: 10px;">函数重载</a> <a href="/tags/命名空间/" style="font-size: 10px;">命名空间</a> <a href="/tags/标准输入与输出/" style="font-size: 10px;">标准输入与输出</a> <a href="/tags/类的分离式写法/" style="font-size: 10px;">类的分离式写法</a>
     </div>
 </div>
 
@@ -486,26 +420,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/08构造函数与析构函数/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="构造函数与析构函数">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:47:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/08构造函数与析构函数/" class="has-link-black-ter is-size-6">构造函数与析构函数</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/07/17/07类的分离式写法/" class="media-left">
+            <a href="/2019/07/17/类的分离式写法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="类的分离式写法">
                 </p>
@@ -514,7 +429,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:42:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/07类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
+                    <a href="/2019/07/17/类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -524,7 +439,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/06命名空间(namespace)/" class="media-left">
+            <a href="/2019/07/17/命名空间(namespace)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="命名空间(namespace)">
                 </p>
@@ -533,7 +448,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:36:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/06命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
+                    <a href="/2019/07/17/命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -543,7 +458,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="media-left">
+            <a href="/2019/07/17/动态分配内存(malloc,free)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="动态分配内存(malloc, free)">
                 </p>
@@ -552,7 +467,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:30:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
+                    <a href="/2019/07/17/动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -562,7 +477,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/04new和delete/" class="media-left">
+            <a href="/2019/07/17/new和delete/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="new和delete">
                 </p>
@@ -571,7 +486,26 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:28:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/04new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
+                    <a href="/2019/07/17/new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/07/17/内联函数/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="内联函数">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T03:22:46.000Z">2019-07-17</time></div>
+                    <a href="/2019/07/17/内联函数/" class="has-link-black-ter is-size-6">内联函数</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -597,7 +531,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">8</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -660,20 +594,6 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/命名空间/">
                         <span class="tag">命名空间</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/构造函数/">
-                        <span class="tag">构造函数</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/析构函数/">
-                        <span class="tag">析构函数</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -717,26 +637,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/08构造函数与析构函数/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="构造函数与析构函数">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:47:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/08构造函数与析构函数/" class="has-link-black-ter is-size-6">构造函数与析构函数</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/07/17/07类的分离式写法/" class="media-left">
+            <a href="/2019/07/17/类的分离式写法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="类的分离式写法">
                 </p>
@@ -745,7 +646,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:42:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/07类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
+                    <a href="/2019/07/17/类的分离式写法/" class="has-link-black-ter is-size-6">类的分离式写法</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -755,7 +656,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/06命名空间(namespace)/" class="media-left">
+            <a href="/2019/07/17/命名空间(namespace)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="命名空间(namespace)">
                 </p>
@@ -764,7 +665,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:36:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/06命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
+                    <a href="/2019/07/17/命名空间(namespace)/" class="has-link-black-ter is-size-6">命名空间(namespace)</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -774,7 +675,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="media-left">
+            <a href="/2019/07/17/动态分配内存(malloc,free)/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="动态分配内存(malloc, free)">
                 </p>
@@ -783,7 +684,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:30:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/05动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
+                    <a href="/2019/07/17/动态分配内存(malloc,free)/" class="has-link-black-ter is-size-6">动态分配内存(malloc, free)</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -793,7 +694,7 @@
         
         <article class="media">
             
-            <a href="/2019/07/17/04new和delete/" class="media-left">
+            <a href="/2019/07/17/new和delete/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="new和delete">
                 </p>
@@ -802,7 +703,26 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T04:28:46.000Z">2019-07-17</time></div>
-                    <a href="/2019/07/17/04new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
+                    <a href="/2019/07/17/new和delete/" class="has-link-black-ter is-size-6">new和delete</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/07/17/内联函数/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="内联函数">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-17T03:22:46.000Z">2019-07-17</time></div>
+                    <a href="/2019/07/17/内联函数/" class="has-link-black-ter is-size-6">内联函数</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
                     </p>
@@ -828,7 +748,7 @@
                     <span class="level-item">七月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">8</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -896,20 +816,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/构造函数/">
-                        <span class="tag">构造函数</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/析构函数/">
-                        <span class="tag">析构函数</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/标准输入与输出/">
                         <span class="tag">标准输入与输出</span>
                         <span class="tag is-grey">1</span>
@@ -940,21 +846,16 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="码农code之路个人博客" height="28">
+                    <img src="/images/logo.svg" alt="类的分离式写法" height="28">
                 
                 </a>
                 <p class="is-size-7">
                 &copy; 2019 红烧肉&nbsp;
-		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271552012'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271552012%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
-
-		</p><p align="left"> 津ICP备19004298号-1 </p>	
-	
-		<!--  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
-                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
                 
-                <p></p>
+                </p>
             </div>
-<!--            <div class="level-end">
+            <div class="level-end">
             
                 <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
                 
@@ -985,11 +886,14 @@
                 
                 </div>
             
-            </div> -->
+            </div>
         </div>
     </div>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271552012'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271552012%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
 </footer>
 
+<script>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
