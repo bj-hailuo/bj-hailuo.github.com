@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>基于libcurl实现REST风格http/https的get和post - 码农code之路个人博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="c/c++开发中经常要用到http/https协议，直接使用socket工作量很大，要是使用socket实现https，那更不可思议，开源的c/c++的http客户端框架，libcurl是首选，而且也相当成熟稳定，最近C++项目中用到https请求，就做下研究。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于libcurl实现REST风格http&#x2F;https的get和post">
+<meta property="og:url" content="http://yoursite.com/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/index.html">
+<meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="c/c++开发中经常要用到http/https协议，直接使用socket工作量很大，要是使用socket实现https，那更不可思议，开源的c/c++的http客户端框架，libcurl是首选，而且也相当成熟稳定，最近C++项目中用到https请求，就做下研究。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-18T07:18:09.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于libcurl实现REST风格http&#x2F;https的get和post">
+<meta name="twitter:description" content="c/c++开发中经常要用到http/https协议，直接使用socket工作量很大，要是使用socket实现https，那更不可思议，开源的c/c++的http客户端框架，libcurl是首选，而且也相当成熟稳定，最近C++项目中用到https请求，就做下研究。">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/QRcode.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="基于libcurl实现REST风格http/https的get和post" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">主页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://woniu201.github.io">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-10-16T07:01:25.000Z">2018-10-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1117 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                基于libcurl实现REST风格http/https的get和post
+            
+        </h1>
+        <div class="content">
+            <p>c/c++开发中经常要用到http/https协议，直接使用socket工作量很大，要是使用socket实现https，那更不可思议，开源的c/c++的http客户端框架，libcurl是首选，而且也相当成熟稳定，最近C++项目中用到https请求，就做下研究。</p>
+<a id="more"></a>
+<h2 id="一：libcurl简介-来源官网"><a href="#一：libcurl简介-来源官网" class="headerlink" title="一：libcurl简介(来源官网)"></a>一：libcurl简介(来源官网)</h2><p>libcurl是一个跨平台的网络协议库，支持http, https, ftp, gopher, telnet, dict, file, 和ldap 协议。libcurl同样支持HTTPS证书授权，HTTP POST, HTTP PUT, FTP 上传, HTTP基本表单上传，代理，cookies,和用户认证。官网地址：<a href="https://curl.haxx.se/libcurl/" target="_blank" rel="noopener">https://curl.haxx.se/libcurl/</a></p>
+<h2 id="二：实现HTTP-GET"><a href="#二：实现HTTP-GET" class="headerlink" title="二：实现HTTP/GET"></a>二：实现HTTP/GET</h2><p>Get.cpp</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************</span><br><span class="line">Copyright (C),  2016-2018,</span><br><span class="line">FileName:		Get</span><br><span class="line">Author:        	woniu201</span><br><span class="line">Email:         	wangpengfei.201@163.com</span><br><span class="line">Created:       	2018/10/15</span><br><span class="line">Description:	实现HTTP/HTTPS GET请求</span><br><span class="line">********************************************************/</span><br><span class="line">#include &quot;main.h&quot;</span><br><span class="line"> </span><br><span class="line">size_t WriteGetResp(void *buffer, size_t size, size_t nmemb, void *userp)</span><br><span class="line">&#123;</span><br><span class="line">	((string*)userp)-&gt;append((char*)buffer, 0, size*nmemb);</span><br><span class="line">	return size*nmemb;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">/************************************</span><br><span class="line">@ Brief:		GET请求</span><br><span class="line">@ Author:		woniu201 </span><br><span class="line">@ Created:		2018/10/15</span><br><span class="line">@ Return:            </span><br><span class="line">************************************/</span><br><span class="line">int HttpGet(char* url)</span><br><span class="line">&#123;</span><br><span class="line">	string respData;</span><br><span class="line">	CURL* curl;</span><br><span class="line">	CURLcode res;</span><br><span class="line"> </span><br><span class="line">	curl = curl_easy_init();</span><br><span class="line">	if (curl == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_URL, url);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteGetResp);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &amp;respData);</span><br><span class="line"> </span><br><span class="line">//  	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, 5000); //libcurl存在毫秒超时bug,如果设备小于1000ms立即返回失败</span><br><span class="line">//  	curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, 5000); //设置超时时间</span><br><span class="line"> </span><br><span class="line">	bool bCA = FALSE;</span><br><span class="line">	if (!bCA)</span><br><span class="line">	&#123;</span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, FALSE);//设定为不验证证书和HOST </span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, FALSE); </span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, TRUE); </span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_CAINFO, &quot;&quot;); </span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	res = curl_easy_perform(curl);</span><br><span class="line">	if (res != CURLE_OK)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; curl_easy_strerror(res) &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	curl_easy_cleanup(curl);</span><br><span class="line"> </span><br><span class="line">	cout &lt;&lt; Utf8ToAscii(respData) &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三：实现HTTP-POST"><a href="#三：实现HTTP-POST" class="headerlink" title="三：实现HTTP/POST"></a>三：实现HTTP/POST</h2><p>Post.cpp</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************</span><br><span class="line">Copyright (C),  2016-2018,</span><br><span class="line">FileName:		Post</span><br><span class="line">Author:        	woniu201</span><br><span class="line">Email:         	wangpengfei.201@163.com</span><br><span class="line">Created:       	2018/10/15</span><br><span class="line">Description:	实现HTTP/HTTPS POST请求</span><br><span class="line">********************************************************/</span><br><span class="line">#include &quot;main.h&quot;</span><br><span class="line"> </span><br><span class="line">size_t WritePostBodyResp(void *buffer, size_t size, size_t nmemb, void *userp)</span><br><span class="line">&#123;</span><br><span class="line">	((string*)userp)-&gt;append((char*)buffer, 0, size*nmemb);</span><br><span class="line">	return size*nmemb;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">size_t WritePostHeaderResp(void *buffer, size_t size, size_t nmemb, void *userp)</span><br><span class="line">&#123;</span><br><span class="line">	((string*)userp)-&gt;append((char*)buffer, 0, size*nmemb);</span><br><span class="line">	return size*nmemb;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">/************************************</span><br><span class="line">@ Brief:		POST请求</span><br><span class="line">@ Author:		woniu201 </span><br><span class="line">@ Created:		2018/10/15</span><br><span class="line">@ Return:            </span><br><span class="line">************************************/</span><br><span class="line">int HttpPost(char* url, char* body)</span><br><span class="line">&#123;</span><br><span class="line">	string respBodyData;</span><br><span class="line">	string respHeadData;</span><br><span class="line">	CURL* curl;</span><br><span class="line">	CURLcode res;</span><br><span class="line"> </span><br><span class="line">	//设置头</span><br><span class="line">	struct curl_slist *headers = NULL;</span><br><span class="line">	headers = curl_slist_append(headers, &quot;Content-Type:application/json;charset=UTF-8&quot;);</span><br><span class="line">	</span><br><span class="line">	curl = curl_easy_init();</span><br><span class="line">	if (curl == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_URL, url);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);</span><br><span class="line"> </span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, WritePostHeaderResp);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WritePostBodyResp);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_WRITEHEADER, &amp;respHeadData);</span><br><span class="line">	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &amp;respBodyData);</span><br><span class="line"> </span><br><span class="line">	//  	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, 5000); //libcurl存在毫秒超时bug,如果设备小于1000ms立即返回失败</span><br><span class="line">	//  	curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, 5000); //设置超时时间</span><br><span class="line"> </span><br><span class="line">	bool bCA = FALSE;</span><br><span class="line">	if (!bCA)</span><br><span class="line">	&#123;</span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, FALSE);//设定为不验证证书和HOST </span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, FALSE); </span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, TRUE); </span><br><span class="line">		curl_easy_setopt(curl, CURLOPT_CAINFO, &quot;&quot;); </span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	res = curl_easy_perform(curl);</span><br><span class="line">	if (res != CURLE_OK)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; curl_easy_strerror(res) &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	curl_slist_free_all(headers);</span><br><span class="line">	curl_easy_cleanup(curl);</span><br><span class="line"> </span><br><span class="line">	cout &lt;&lt; Utf8ToAscii(respHeadData) &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; Utf8ToAscii(respBodyData) &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他代码"><a href="#其他代码" class="headerlink" title="其他代码"></a>其他代码</h2><p>Utils.cpp</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************</span><br><span class="line">Copyright (C),  2016-2018,</span><br><span class="line">FileName:		utils</span><br><span class="line">Author:        	woniu201</span><br><span class="line">Email:         	wangpengfei.201@163.com</span><br><span class="line">Created:       	2018/10/15</span><br><span class="line">Description:	ASSIC--UTF8互转</span><br><span class="line">********************************************************/</span><br><span class="line">#include &quot;main.h&quot;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;Windows.h&gt;</span><br><span class="line">#include &lt;wchar.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"> </span><br><span class="line">wstring	AsciiToUnicode(const string&amp; str) &#123;  </span><br><span class="line">	// 预算-缓冲区中宽字节的长度    </span><br><span class="line">	int unicodeLen = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, nullptr, 0);  </span><br><span class="line">	// 给指向缓冲区的指针变量分配内存    </span><br><span class="line">	wchar_t *pUnicode = (wchar_t*)malloc(sizeof(wchar_t)*unicodeLen);  </span><br><span class="line">	// 开始向缓冲区转换字节    </span><br><span class="line">	MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, pUnicode, unicodeLen);  </span><br><span class="line">	wstring ret_str = pUnicode;  </span><br><span class="line">	free(pUnicode);  </span><br><span class="line">	return ret_str;  </span><br><span class="line">&#125;  </span><br><span class="line">string UnicodeToAscii(const wstring&amp; wstr) &#123;  </span><br><span class="line">	// 预算-缓冲区中多字节的长度    </span><br><span class="line">	int ansiiLen = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);  </span><br><span class="line">	// 给指向缓冲区的指针变量分配内存    </span><br><span class="line">	char *pAssii = (char*)malloc(sizeof(char)*ansiiLen);  </span><br><span class="line">	// 开始向缓冲区转换字节    </span><br><span class="line">	WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, pAssii, ansiiLen, nullptr, nullptr);  </span><br><span class="line">	string ret_str = pAssii;  </span><br><span class="line">	free(pAssii);  </span><br><span class="line">	return ret_str;  </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">wstring Utf8ToUnicode(const string&amp; str) &#123;  </span><br><span class="line">	// 预算-缓冲区中宽字节的长度    </span><br><span class="line">	int unicodeLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);  </span><br><span class="line">	// 给指向缓冲区的指针变量分配内存    </span><br><span class="line">	wchar_t *pUnicode = (wchar_t*)malloc(sizeof(wchar_t)*unicodeLen);  </span><br><span class="line">	// 开始向缓冲区转换字节    </span><br><span class="line">	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, pUnicode, unicodeLen);  </span><br><span class="line">	wstring ret_str = pUnicode;  </span><br><span class="line">	free(pUnicode);  </span><br><span class="line">	return ret_str;  </span><br><span class="line">&#125;  </span><br><span class="line">string UnicodeToUtf8(const wstring&amp; wstr) &#123;  </span><br><span class="line">	// 预算-缓冲区中多字节的长度    </span><br><span class="line">	int ansiiLen = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);  </span><br><span class="line">	// 给指向缓冲区的指针变量分配内存    </span><br><span class="line">	char *pAssii = (char*)malloc(sizeof(char)*ansiiLen);  </span><br><span class="line">	// 开始向缓冲区转换字节    </span><br><span class="line">	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, pAssii, ansiiLen, nullptr, nullptr);  </span><br><span class="line">	string ret_str = pAssii;  </span><br><span class="line">	free(pAssii);  </span><br><span class="line">	return ret_str;  </span><br><span class="line">&#125;  </span><br><span class="line"> </span><br><span class="line">/************************************</span><br><span class="line">@ Brief:		ASSIC转UTF8</span><br><span class="line">@ Author:		woniu201 </span><br><span class="line">@ Created:		2018/10/16</span><br><span class="line">@ Return:            </span><br><span class="line">************************************/</span><br><span class="line">string AsciiToUtf8(const string&amp; str) &#123;  </span><br><span class="line">	return UnicodeToUtf8(AsciiToUnicode(str));  </span><br><span class="line">&#125;  </span><br><span class="line"> </span><br><span class="line">/************************************</span><br><span class="line">@ Brief:		UTF8转ASSIC</span><br><span class="line">@ Author:		woniu201 </span><br><span class="line">@ Created:		2018/10/16</span><br><span class="line">@ Return:            </span><br><span class="line">************************************/</span><br><span class="line">string Utf8ToAscii(const string&amp; str) &#123;  </span><br><span class="line">	return UnicodeToAscii(Utf8ToUnicode(str));  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>main.h</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#ifndef _MAIN_H</span><br><span class="line">#define _MAIN_H</span><br><span class="line"> </span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &quot;include/curl.h&quot;</span><br><span class="line"> </span><br><span class="line">using namespace std;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">#pragma comment(lib, &quot;ssleay32.lib&quot;)</span><br><span class="line">#pragma comment(lib, &quot;libcurl.lib&quot;)</span><br><span class="line"> </span><br><span class="line">string AsciiToUtf8(const string&amp; str);</span><br><span class="line">string Utf8ToAscii(const string&amp; str);</span><br><span class="line"> </span><br><span class="line">int HttpGet(char* url);</span><br><span class="line">int HttpPost(char* url, char* body);</span><br><span class="line">int HttpDownload(char* url,  char* filePath);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/QRCode.png" alt></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">C++操作文件行(读取，删除，修改指定行)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2017/09/20/Applied08JNI技术/">
+                <span class="level-item">windows和linux环境下java调用C++代码-JNI技术</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="码农code之路">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        码农code之路
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        红烧肉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>北京.西二旗</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        2
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        20
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NDE0NjMwNw==&amp;scene=124#wechat_redirect" target="_blank">
+                扫码关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/ppoffice">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="https://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="https://dribbble.com">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/woniu211111" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/C-基础/">
+            <span class="level-start">
+                <span class="level-item">C++基础</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/C-应用篇/">
+            <span class="level-start">
+                <span class="level-item">C++应用篇</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/const/" style="font-size: 10px;">const</a> <a href="/tags/delete/" style="font-size: 10px;">delete</a> <a href="/tags/free/" style="font-size: 10px;">free</a> <a href="/tags/malloc/" style="font-size: 10px;">malloc</a> <a href="/tags/new/" style="font-size: 10px;">new</a> <a href="/tags/内联函数/" style="font-size: 10px;">内联函数</a> <a href="/tags/函数重载/" style="font-size: 10px;">函数重载</a> <a href="/tags/友元/" style="font-size: 10px;">友元</a> <a href="/tags/命名空间/" style="font-size: 10px;">命名空间</a> <a href="/tags/构造函数/" style="font-size: 10px;">构造函数</a> <a href="/tags/析构函数/" style="font-size: 10px;">析构函数</a> <a href="/tags/标准输入与输出/" style="font-size: 10px;">标准输入与输出</a> <a href="/tags/浅拷贝/" style="font-size: 10px;">浅拷贝</a> <a href="/tags/深拷贝/" style="font-size: 10px;">深拷贝</a> <a href="/tags/类的分离式写法/" style="font-size: 10px;">类的分离式写法</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚继承/" style="font-size: 10px;">虚继承</a> <a href="/tags/配置文件/" style="font-size: 10px;">配置文件</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/博文导航/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="博文导航">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T04:00:21.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/博文导航/" class="has-link-black-ter is-size-6">博文导航</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="一次邮件发送协议SMTP问题排查">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-08T01:24:28.000Z">2019-04-08</time></div>
+                    <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="has-link-black-ter is-size-6">一次邮件发送协议SMTP问题排查</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="纯C++实现操作配置文件(告别跨平台问题)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="has-link-black-ter is-size-6">纯C++实现操作配置文件(告别跨平台问题)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="C++操作文件行(读取，删除，修改指定行)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="has-link-black-ter is-size-6">C++操作文件行(读取，删除，修改指定行)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="基于libcurl实现REST风格http/https的get和post">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-16T07:01:25.000Z">2018-10-16</time></div>
+                    <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="has-link-black-ter is-size-6">基于libcurl实现REST风格http/https的get和post</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JSON/">
+                        <span class="tag">JSON</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/XML/">
+                        <span class="tag">XML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/const/">
+                        <span class="tag">const</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/delete/">
+                        <span class="tag">delete</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/free/">
+                        <span class="tag">free</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/malloc/">
+                        <span class="tag">malloc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/new/">
+                        <span class="tag">new</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内联函数/">
+                        <span class="tag">内联函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数重载/">
+                        <span class="tag">函数重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/友元/">
+                        <span class="tag">友元</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/命名空间/">
+                        <span class="tag">命名空间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/构造函数/">
+                        <span class="tag">构造函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/析构函数/">
+                        <span class="tag">析构函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/浅拷贝/">
+                        <span class="tag">浅拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深拷贝/">
+                        <span class="tag">深拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/类的分离式写法/">
+                        <span class="tag">类的分离式写法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚继承/">
+                        <span class="tag">虚继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/配置文件/">
+                        <span class="tag">配置文件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/博文导航/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="博文导航">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T04:00:21.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/博文导航/" class="has-link-black-ter is-size-6">博文导航</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="一次邮件发送协议SMTP问题排查">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-08T01:24:28.000Z">2019-04-08</time></div>
+                    <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="has-link-black-ter is-size-6">一次邮件发送协议SMTP问题排查</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="纯C++实现操作配置文件(告别跨平台问题)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="has-link-black-ter is-size-6">纯C++实现操作配置文件(告别跨平台问题)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="C++操作文件行(读取，删除，修改指定行)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="has-link-black-ter is-size-6">C++操作文件行(读取，删除，修改指定行)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="基于libcurl实现REST风格http/https的get和post">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-16T07:01:25.000Z">2018-10-16</time></div>
+                    <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="has-link-black-ter is-size-6">基于libcurl实现REST风格http/https的get和post</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JSON/">
+                        <span class="tag">JSON</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/XML/">
+                        <span class="tag">XML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/const/">
+                        <span class="tag">const</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/delete/">
+                        <span class="tag">delete</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/free/">
+                        <span class="tag">free</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/malloc/">
+                        <span class="tag">malloc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/new/">
+                        <span class="tag">new</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内联函数/">
+                        <span class="tag">内联函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数重载/">
+                        <span class="tag">函数重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/友元/">
+                        <span class="tag">友元</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/命名空间/">
+                        <span class="tag">命名空间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/构造函数/">
+                        <span class="tag">构造函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/析构函数/">
+                        <span class="tag">析构函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/浅拷贝/">
+                        <span class="tag">浅拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深拷贝/">
+                        <span class="tag">深拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/类的分离式写法/">
+                        <span class="tag">类的分离式写法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚继承/">
+                        <span class="tag">虚继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/配置文件/">
+                        <span class="tag">配置文件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="基于libcurl实现REST风格http/https的get和post" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 红烧肉&nbsp;
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271552012'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271552012%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
+
+		</p><p align="left"> 津ICP备19004298号-1 </p>	
+	
+		<!--  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                <p></p>
+            </div>
+<!--            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div> -->
+        </div>
+    </div>
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

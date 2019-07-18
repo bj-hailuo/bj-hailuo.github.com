@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>windows和linux环境下java调用C++代码-JNI技术 - 码农code之路个人博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="最近部门做安卓移动开发的需要调C++的代码，困难重重，最后任务交给了我，查找相关资料，没有一个教程能把不同环境(windows,linux)下怎么调用说明白的，自己在实现的过程中踩了几个坑，在这里总结下，希望看到的以后能少走弯路。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows和linux环境下java调用C++代码-JNI技术">
+<meta property="og:url" content="http://yoursite.com/2017/09/20/Applied08JNI技术/index.html">
+<meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="最近部门做安卓移动开发的需要调C++的代码，困难重重，最后任务交给了我，查找相关资料，没有一个教程能把不同环境(windows,linux)下怎么调用说明白的，自己在实现的过程中踩了几个坑，在这里总结下，希望看到的以后能少走弯路。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-18T08:35:23.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows和linux环境下java调用C++代码-JNI技术">
+<meta name="twitter:description" content="最近部门做安卓移动开发的需要调C++的代码，困难重重，最后任务交给了我，查找相关资料，没有一个教程能把不同环境(windows,linux)下怎么调用说明白的，自己在实现的过程中踩了几个坑，在这里总结下，希望看到的以后能少走弯路。">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/QRcode.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="windows和linux环境下java调用C++代码-JNI技术" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">主页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://woniu201.github.io">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-09-20T07:52:54.000Z">2017-09-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1405 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                windows和linux环境下java调用C++代码-JNI技术
+            
+        </h1>
+        <div class="content">
+            <p>最近部门做安卓移动开发的需要调C++的代码，困难重重，最后任务交给了我，查找相关资料，没有一个教程能把不同环境(windows,linux)下怎么调用说明白的，自己在实现的过程中踩了几个坑，在这里总结下，希望看到的以后能少走弯路。</p>
+<a id="more"></a>
+<p>使用工具：</p>
+<pre><code>1.JAVA使用的IDE为eclipse
+2.windows环境下C++使用的IDE为visual studio 2010
+3.linux环境下C++使用的编译器为gcc/g++</code></pre><h2 id="一-windows环境下java调用C-代码"><a href="#一-windows环境下java调用C-代码" class="headerlink" title="一.windows环境下java调用C++代码"></a>一.windows环境下java调用C++代码</h2><p><font color="#008000">1.1新建java工程，生成相应头文件</font></p>
+<p>eclipse新建工程名为”jniDemo”的java工程，在包名为com.woniu.Native下新建”NativeCpp.java”类，如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package com.woniu.Native;</span><br><span class="line"> </span><br><span class="line">public class NativeCpp &#123;</span><br><span class="line">	public native void fun1();</span><br><span class="line">	public native int  fun2(int a, int b);</span><br><span class="line">	public native void fun3(String url1, String url2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF01.png" alt></p>
+<p>编译生成.class文件</p>
+<p>进入工程下的target\classes目录下，执行”javah -jni com.woniu.Native.NativeCpp”,运行结果如下：</p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF02.png" alt></p>
+<p>此时，会在classes目录下生成”com_woniu_Native_NativeCpp.h”头文件，头文件内容如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/* DO NOT EDIT THIS FILE - it is machine generated */</span><br><span class="line">#include &lt;jni.h&gt;</span><br><span class="line">/* Header for class com_woniu_Native_NativeCpp */</span><br><span class="line"> </span><br><span class="line">#ifndef _Included_com_woniu_Native_NativeCpp</span><br><span class="line">#define _Included_com_woniu_Native_NativeCpp</span><br><span class="line">#ifdef __cplusplus</span><br><span class="line">extern &quot;C&quot; &#123;</span><br><span class="line">#endif</span><br><span class="line">/*</span><br><span class="line"> * Class:     com_woniu_Native_NativeCpp</span><br><span class="line"> * Method:    fun1</span><br><span class="line"> * Signature: ()V</span><br><span class="line"> */</span><br><span class="line">JNIEXPORT void JNICALL Java_com_woniu_Native_NativeCpp_fun1</span><br><span class="line">  (JNIEnv *, jobject);</span><br><span class="line"> </span><br><span class="line">/*</span><br><span class="line"> * Class:     com_woniu_Native_NativeCpp</span><br><span class="line"> * Method:    fun2</span><br><span class="line"> * Signature: (II)I</span><br><span class="line"> */</span><br><span class="line">JNIEXPORT jint JNICALL Java_com_woniu_Native_NativeCpp_fun2</span><br><span class="line">  (JNIEnv *, jobject, jint, jint);</span><br><span class="line"> </span><br><span class="line">/*</span><br><span class="line"> * Class:     com_woniu_Native_NativeCpp</span><br><span class="line"> * Method:    fun3</span><br><span class="line"> * Signature: (Ljava/lang/String;Ljava/lang/String;)V</span><br><span class="line"> */</span><br><span class="line">JNIEXPORT void JNICALL Java_com_woniu_Native_NativeCpp_fun3</span><br><span class="line">  (JNIEnv *, jobject, jstring, jstring);</span><br><span class="line"> </span><br><span class="line">#ifdef __cplusplus</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">1.2 c++生成动态库</font><br>vs2010新建工程名为”JniDll”的win32控制台应用程序，win32应用程序向导界面选择 “DLL”<br><img src="/img/JNI%E6%8A%80%E6%9C%AF03.png" alt></p>
+<p>创建完成后，把2.1中生成的”com_woniu_Native_NativeCpp.h”头文件放入该工程，并把头文件中的#include &lt;jni.h&gt;改为 “jni.h”，<br>把JDK下include文件夹下的”jni.h”和include下win32文件夹下的”jni_md.h”头文件也一同放入创建的工程中。</p>
+<p>工程目录如下：<br><img src="/img/JNI%E6%8A%80%E6%9C%AF04.png" alt></p>
+<p>编辑JniDll.cpp源码文件，实现头文件中的函数，如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************</span><br><span class="line">Copyright (C), 2016-2017,</span><br><span class="line">FileName: 	jni</span><br><span class="line">Author: 	woniu201</span><br><span class="line">Email: 		wangpengfei.201@163.com</span><br><span class="line">Created: 	2017/09/20</span><br><span class="line">Description:Jni function</span><br><span class="line">********************************************************/</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &quot;com_woniu_Native_NativeCpp.h&quot;</span><br><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line">#include &quot;stdlib.h&quot;</span><br><span class="line"> </span><br><span class="line">JNIEXPORT void JNICALL Java_com_woniu_Native_NativeCpp_fun1</span><br><span class="line">	(JNIEnv *, jobject)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;hello world\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">JNIEXPORT jint JNICALL Java_com_woniu_Native_NativeCpp_fun2</span><br><span class="line">	(JNIEnv *, jobject, jint a, jint b)</span><br><span class="line">&#123;</span><br><span class="line">	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">char* jstringToChar(JNIEnv* env, jstring jstr) &#123;</span><br><span class="line">	char* rtn = NULL;</span><br><span class="line">	jclass clsstring = env-&gt;FindClass(&quot;java/lang/String&quot;);</span><br><span class="line">	jstring strencode = env-&gt;NewStringUTF(&quot;GB2312&quot;);</span><br><span class="line">	jmethodID mid = env-&gt;GetMethodID(clsstring, &quot;getBytes&quot;, &quot;(Ljava/lang/String;)[B&quot;);</span><br><span class="line">	jbyteArray barr = (jbyteArray) env-&gt;CallObjectMethod(jstr, mid, strencode);</span><br><span class="line">	jsize alen = env-&gt;GetArrayLength(barr);</span><br><span class="line">	jbyte* ba = env-&gt;GetByteArrayElements(barr, JNI_FALSE);</span><br><span class="line">	if (alen &gt; 0) &#123;</span><br><span class="line">		rtn = (char*) malloc(alen + 1);</span><br><span class="line">		memcpy(rtn, ba, alen);</span><br><span class="line">		rtn[alen] = 0;</span><br><span class="line">	&#125;</span><br><span class="line">	env-&gt;ReleaseByteArrayElements(barr, ba, 0);</span><br><span class="line">	return rtn;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">JNIEXPORT void JNICALL Java_com_woniu_Native_NativeCpp_fun3</span><br><span class="line">	(JNIEnv *env, jobject, jstring url1, jstring url2)</span><br><span class="line">&#123;</span><br><span class="line">	//jstringתchar*</span><br><span class="line">	char* pUrl1 = jstringToChar(env, url1);</span><br><span class="line">	char* pUrl2 = jstringToChar(env, url2);</span><br><span class="line">	printf(&quot;url1 = %s\n&quot;, pUrl1);</span><br><span class="line">	printf(&quot;url2 = %s\n&quot;, pUrl2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我本机是64位系统，使用的是64位JDK，这里生成的动态库也要生成64位的库，否则调用的时候报如下错误：</p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF05.png" alt></p>
+<p>更改vs编译生成64位dll，步骤如下：</p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF06.png" alt></p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF07.png" alt></p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF08.png" alt></p>
+<p>编译生成解决方案，这时候会在工程根目录下，生成”x64文件夹”，Debug文件夹下会有动态库”JniDll.dll”</p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF09.png" alt></p>
+<p><font color="#008000">1.3  java调用dll</font></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.woniu.jniDemo;</span><br><span class="line"> </span><br><span class="line">import com.woniu.Native.NativeCpp;</span><br><span class="line"> </span><br><span class="line">public class App </span><br><span class="line">&#123;</span><br><span class="line">    public static void main( String[] args )</span><br><span class="line">    &#123;</span><br><span class="line">    	System.load(&quot;D:\\VS2010\\VC\\JniDll\\x64\\Debug\\JniDll.dll&quot;);</span><br><span class="line">    	NativeCpp nativeCpp = new NativeCpp();</span><br><span class="line">        nativeCpp.fun1();</span><br><span class="line">        System.out.println(nativeCpp.fun2(3, 3));</span><br><span class="line">        nativeCpp.fun3(&quot;www.baidu.com&quot;, &quot;www.haoservice.cn&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF10.png" alt></p>
+<h2 id="二：linux-CentOS-环境下java调用C-代码"><a href="#二：linux-CentOS-环境下java调用C-代码" class="headerlink" title="二：linux(CentOS)环境下java调用C++代码"></a>二：linux(CentOS)环境下java调用C++代码</h2><p><font color="#008000">2.1 编译环境</font></p>
+<pre><code>a.安装gcc和g++
+
+yum install gcc-c++
+
+
+b.安装jdk
+去官网上下载jdk安装包，建议使用rpm安装包，会自动配置环境变量。安装完后如下：</code></pre><p><img src="/img/JNI%E6%8A%80%E6%9C%AF11.png" alt></p>
+<p>本机的安装目录为：/usr/java/jdk1.8.0_144/，不同版本可能不同。</p>
+<p><font color="red">  这里一定要注意不能安装openjdk,因为openjdk没有include目录，编译时需要用到include目录的头文件。<br></font></p>
+<p><font color="#008000">2.2 制作动态库(so库)</font></p>
+<pre><code>a.创建文件夹&quot;jniso&quot;,mkdir jniso。
+
+
+b.把2.1中生成的头文件&quot;com_woniu_Native_NativeCpp.h&quot;拷贝过来,#include &quot;jni.h&quot;改为#include &lt;jni.h&gt;
+
+
+c.新建jni.cpp源文件，添加如下代码：</code></pre><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;jni.h&gt;</span><br><span class="line">#include &quot;com_woniu_Native_NativeCpp.h&quot;</span><br><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line">#include &quot;stdlib.h&quot;</span><br><span class="line">#include &quot;string.h&quot;</span><br><span class="line"> </span><br><span class="line">JNIEXPORT void JNICALL Java_com_woniu_Native_NativeCpp_fun1 (JNIEnv *, jobject)</span><br><span class="line">&#123;</span><br><span class="line">        printf(&quot;hello world\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">JNIEXPORT jint JNICALL Java_com_woniu_Native_NativeCpp_fun2</span><br><span class="line">        (JNIEnv *, jobject, jint a, jint b)</span><br><span class="line">&#123;</span><br><span class="line">        return a + b;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">char* jstringToChar(JNIEnv* env, jstring jstr) &#123;</span><br><span class="line">        char* rtn = NULL;</span><br><span class="line">        jclass clsstring = env-&gt;FindClass(&quot;java/lang/String&quot;);</span><br><span class="line">        jstring strencode = env-&gt;NewStringUTF(&quot;GB2312&quot;);</span><br><span class="line">        jmethodID mid = env-&gt;GetMethodID(clsstring, &quot;getBytes&quot;, &quot;(Ljava/lang/String;)[B&quot;);</span><br><span class="line">        jbyteArray barr = (jbyteArray) env-&gt;CallObjectMethod(jstr, mid, strencode);</span><br><span class="line">        jsize alen = env-&gt;GetArrayLength(barr);</span><br><span class="line">        jbyte* ba = env-&gt;GetByteArrayElements(barr, JNI_FALSE);</span><br><span class="line">        if (alen &gt; 0) &#123;</span><br><span class="line">                rtn = (char*) malloc(alen + 1);</span><br><span class="line">                memcpy(rtn, ba, alen);</span><br><span class="line">                rtn[alen] = 0;</span><br><span class="line">        &#125;</span><br><span class="line">        env-&gt;ReleaseByteArrayElements(barr, ba, 0);</span><br><span class="line">        return rtn;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">JNIEXPORT void JNICALL Java_com_woniu_Native_NativeCpp_fun3</span><br><span class="line">        (JNIEnv *env, jobject, jstring url1, jstring url2)</span><br><span class="line">&#123;</span><br><span class="line">        char* pUrl1 = jstringToChar(env, url1);</span><br><span class="line">        char* pUrl2 = jstringToChar(env, url2);</span><br><span class="line">        printf(&quot;url1 = %s\n&quot;, pUrl1);</span><br><span class="line">        printf(&quot;url2 = %s\n&quot;, pUrl2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>d.编译，生成动态库<br>g++ -fPIC -c jni.cpp -I /usr/java/jdk1.8.0_144/include/ -I /usr/java/jdk1.8.0_144/include/linux/<br>g++ -shared jni.o -o jni.so</p>
+<p><font color="#008000">2.3 java调用jni.so</font></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import com.woniu.Native.NativeCpp;</span><br><span class="line"> </span><br><span class="line">public class App </span><br><span class="line">&#123;</span><br><span class="line">    public static void main( String[] args )</span><br><span class="line">    &#123;</span><br><span class="line">    	//windows环境下加载库</span><br><span class="line">    	//System.load(&quot;D:\\VS2010\\VC\\JniDll\\x64\\Debug\\JniDll.dll&quot;);</span><br><span class="line">    	</span><br><span class="line">    	//linux下加载库</span><br><span class="line">    	System.load(&quot;/mnt/hgfs/svn/svn/Demo/jniso/jni.so&quot;);</span><br><span class="line">    	</span><br><span class="line">    	NativeCpp nativeCpp = new NativeCpp();</span><br><span class="line">        nativeCpp.fun1();</span><br><span class="line">        System.out.println(nativeCpp.fun2(3, 3));</span><br><span class="line">        nativeCpp.fun3(&quot;www.baidu.com&quot;, &quot;www.haoservice.cn&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<p><img src="/img/JNI%E6%8A%80%E6%9C%AF12.png" alt></p>
+<p><font color="red" size="3" face="宋体">关注下面公众号，回复”105”获取windows下生成dll源码</font></p>
+<p><font color="red" size="3" face="宋体">关注下面公众号，回复”106”获取linux下生成so源码</font></p>
+<p><img src="/img/QRCode.png" alt></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">基于libcurl实现REST风格http/https的get和post</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2017/09/06/Applied02C++构造和解析Json/">
+                <span class="level-item">C++构造和解析JSON</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="码农code之路">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        码农code之路
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        红烧肉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>北京.西二旗</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        23
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        2
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        20
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NDE0NjMwNw==&amp;scene=124#wechat_redirect" target="_blank">
+                扫码关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/ppoffice">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="https://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="https://dribbble.com">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/woniu211111" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/C-基础/">
+            <span class="level-start">
+                <span class="level-item">C++基础</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/C-应用篇/">
+            <span class="level-start">
+                <span class="level-item">C++应用篇</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/const/" style="font-size: 10px;">const</a> <a href="/tags/delete/" style="font-size: 10px;">delete</a> <a href="/tags/free/" style="font-size: 10px;">free</a> <a href="/tags/malloc/" style="font-size: 10px;">malloc</a> <a href="/tags/new/" style="font-size: 10px;">new</a> <a href="/tags/内联函数/" style="font-size: 10px;">内联函数</a> <a href="/tags/函数重载/" style="font-size: 10px;">函数重载</a> <a href="/tags/友元/" style="font-size: 10px;">友元</a> <a href="/tags/命名空间/" style="font-size: 10px;">命名空间</a> <a href="/tags/构造函数/" style="font-size: 10px;">构造函数</a> <a href="/tags/析构函数/" style="font-size: 10px;">析构函数</a> <a href="/tags/标准输入与输出/" style="font-size: 10px;">标准输入与输出</a> <a href="/tags/浅拷贝/" style="font-size: 10px;">浅拷贝</a> <a href="/tags/深拷贝/" style="font-size: 10px;">深拷贝</a> <a href="/tags/类的分离式写法/" style="font-size: 10px;">类的分离式写法</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚继承/" style="font-size: 10px;">虚继承</a> <a href="/tags/配置文件/" style="font-size: 10px;">配置文件</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/博文导航/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="博文导航">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T04:00:21.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/博文导航/" class="has-link-black-ter is-size-6">博文导航</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="一次邮件发送协议SMTP问题排查">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-08T01:24:28.000Z">2019-04-08</time></div>
+                    <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="has-link-black-ter is-size-6">一次邮件发送协议SMTP问题排查</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="纯C++实现操作配置文件(告别跨平台问题)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="has-link-black-ter is-size-6">纯C++实现操作配置文件(告别跨平台问题)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="C++操作文件行(读取，删除，修改指定行)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="has-link-black-ter is-size-6">C++操作文件行(读取，删除，修改指定行)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="基于libcurl实现REST风格http/https的get和post">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-16T07:01:25.000Z">2018-10-16</time></div>
+                    <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="has-link-black-ter is-size-6">基于libcurl实现REST风格http/https的get和post</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JSON/">
+                        <span class="tag">JSON</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/XML/">
+                        <span class="tag">XML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/const/">
+                        <span class="tag">const</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/delete/">
+                        <span class="tag">delete</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/free/">
+                        <span class="tag">free</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/malloc/">
+                        <span class="tag">malloc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/new/">
+                        <span class="tag">new</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内联函数/">
+                        <span class="tag">内联函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数重载/">
+                        <span class="tag">函数重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/友元/">
+                        <span class="tag">友元</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/命名空间/">
+                        <span class="tag">命名空间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/构造函数/">
+                        <span class="tag">构造函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/析构函数/">
+                        <span class="tag">析构函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/浅拷贝/">
+                        <span class="tag">浅拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深拷贝/">
+                        <span class="tag">深拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/类的分离式写法/">
+                        <span class="tag">类的分离式写法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚继承/">
+                        <span class="tag">虚继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/配置文件/">
+                        <span class="tag">配置文件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/博文导航/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="博文导航">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T04:00:21.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/博文导航/" class="has-link-black-ter is-size-6">博文导航</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="一次邮件发送协议SMTP问题排查">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-08T01:24:28.000Z">2019-04-08</time></div>
+                    <a href="/2019/04/08/Applied07一次邮件发送协议SMTP问题排查/" class="has-link-black-ter is-size-6">一次邮件发送协议SMTP问题排查</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="纯C++实现操作配置文件(告别跨平台问题)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/" class="has-link-black-ter is-size-6">纯C++实现操作配置文件(告别跨平台问题)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="C++操作文件行(读取，删除，修改指定行)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-16T04:00:21.000Z">2018-11-16</time></div>
+                    <a href="/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/" class="has-link-black-ter is-size-6">C++操作文件行(读取，删除，修改指定行)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="基于libcurl实现REST风格http/https的get和post">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-16T07:01:25.000Z">2018-10-16</time></div>
+                    <a href="/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/" class="has-link-black-ter is-size-6">基于libcurl实现REST风格http/https的get和post</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JSON/">
+                        <span class="tag">JSON</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/XML/">
+                        <span class="tag">XML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/const/">
+                        <span class="tag">const</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/delete/">
+                        <span class="tag">delete</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/free/">
+                        <span class="tag">free</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/malloc/">
+                        <span class="tag">malloc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/new/">
+                        <span class="tag">new</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内联函数/">
+                        <span class="tag">内联函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数重载/">
+                        <span class="tag">函数重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/友元/">
+                        <span class="tag">友元</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/命名空间/">
+                        <span class="tag">命名空间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/构造函数/">
+                        <span class="tag">构造函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/析构函数/">
+                        <span class="tag">析构函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/浅拷贝/">
+                        <span class="tag">浅拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深拷贝/">
+                        <span class="tag">深拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/类的分离式写法/">
+                        <span class="tag">类的分离式写法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚继承/">
+                        <span class="tag">虚继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/配置文件/">
+                        <span class="tag">配置文件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="windows和linux环境下java调用C++代码-JNI技术" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 红烧肉&nbsp;
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271552012'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271552012%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
+
+		</p><p align="left"> 津ICP备19004298号-1 </p>	
+	
+		<!--  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                <p></p>
+            </div>
+<!--            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div> -->
+        </div>
+    </div>
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
