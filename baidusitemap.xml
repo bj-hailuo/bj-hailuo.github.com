@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.haoservice.cn/2019/07/18/%E5%8D%9A%E6%96%87%E5%AF%BC%E8%88%AA/</loc>
-    <lastmod>2019-07-19</lastmod>
-  </url>  <url>
     <loc>http://www.haoservice.cn/2018/07/09/Docker03docker%E5%AE%89%E8%A3%85mysql/</loc>
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
@@ -11,6 +8,9 @@
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
     <loc>http://www.haoservice.cn/2018/06/29/Docker01%E5%85%A8%E9%9D%A2%E8%AE%A4%E8%AF%86Docker%E5%92%8C%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4/</loc>
+    <lastmod>2019-07-19</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/07/18/%E5%8D%9A%E6%96%87%E5%AF%BC%E8%88%AA/</loc>
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
     <loc>http://www.haoservice.cn/2017/09/20/Applied08JNI%E6%8A%80%E6%9C%AF/</loc>
