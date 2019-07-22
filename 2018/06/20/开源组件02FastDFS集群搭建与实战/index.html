@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>开源组件:FastDFS集群搭建与实战 - 码农code之路个人博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="FastDFS是一个轻量级的分布式文件系统，在实际生产环境往往以集群的形式部署，保证了服务的高可用。本文重点阐述FastDFS集群的搭建和项目实战。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开源组件:FastDFS集群搭建与实战">
+<meta property="og:url" content="http://www.haoservice.cn/2018/06/20/开源组件02FastDFS集群搭建与实战/index.html">
+<meta property="og:site_name" content="码农code之路个人博客">
+<meta property="og:description" content="FastDFS是一个轻量级的分布式文件系统，在实际生产环境往往以集群的形式部署，保证了服务的高可用。本文重点阐述FastDFS集群的搭建和项目实战。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.haoservice.cn/images/og_image.png">
+<meta property="og:updated_time" content="2019-07-22T07:45:32.691Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开源组件:FastDFS集群搭建与实战">
+<meta name="twitter:description" content="FastDFS是一个轻量级的分布式文件系统，在实际生产环境往往以集群的形式部署，保证了服务的高可用。本文重点阐述FastDFS集群的搭建和项目实战。">
+<meta name="twitter:image" content="http://www.haoservice.cn/images/og_image.png">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="开源组件:FastDFS集群搭建与实战" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">主页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://woniu201.github.io">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-06-20T05:55:02.000Z">2018-06-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/开源组件/">开源组件</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1579 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                开源组件:FastDFS集群搭建与实战
+            
+        </h1>
+        <div class="content">
+            <p>FastDFS是一个轻量级的分布式文件系统，在实际生产环境往往以集群的形式部署，保证了服务的高可用。本文重点阐述FastDFS集群的搭建和项目实战。</p>
+<a id="more"></a>
+
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p><font color="#008000">上传流程图</font></p>
+<p><img src="/img/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B602FastDFS%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%AE%9E%E6%88%9801.png" alt></p>
+<p><font color="#008000">下载流程图</font></p>
+<p><img src="/img/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B602FastDFS%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%AE%9E%E6%88%9802.png" alt></p>
+<p>基本概念可参考作者上篇文章：<a href="http://haoservice.cn/2018/06/20/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B601FastDFS%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%89%E8%A3%85/" target="_blank" rel="noopener">FastDFS极速入门</a></p>
+<h3 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h3><ul>
+<li>FastDFS不会对文件进行分块存储，直接保存到Storage服务上，这也是不适合超大文件存储的原因，官方建议(4K~500M)，优点：简介高效。<br></li>
+<li>FastDFS采用分组存储方式，同一组可以包括多个Storage Server，其中一个Storage接收到上传的文件，会同步文件到同组其他Storage Server。<br></li>
+<li>一个组的存储容量为组内Storage Server容量最小的那个。优点：组内服务压力较大时可以增加Storage Server来缓解压力；系统容量不足时增加组来获得更大的存储空间。<br></li>
+<li>文件上传成功返回的文件ID由组名，磁盘目录和文件名构成。</li>
+</ul>
+<p><img src="/img/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B602FastDFS%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%AE%9E%E6%88%9803.png" alt></p>
+<h3 id="集群服务器规划"><a href="#集群服务器规划" class="headerlink" title="集群服务器规划"></a>集群服务器规划</h3><ul>
+<li><p>系统环境：centos 7.3</p>
+</li>
+<li><p>跟踪服务器1(Tracker)：192.168.72.135</p>
+</li>
+<li><p>跟踪服务器2(Tracker)：192.168.72.136</p>
+</li>
+<li><p>存储服务器1(Storage)：192.168.72.135—(group1)</p>
+</li>
+<li><p>存储服务器2(Storage)：192.168.72.136—(group1)</p>
+</li>
+<li><p>存储服务器3(Storage)：192.168.72.137—(group2)</p>
+</li>
+</ul>
+<p>由于电脑性能有限，但要模拟多group，只虚拟了3个节点，对group1做了两个节点来备份数据，group2为单节点，生产环境要每个组至少两个节点来保证高可用。</p>
+<h3 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h3><ul>
+<li><p>fastdfs-5.11.tar.gz</p>
+</li>
+<li><p>fastdfs-nginx-module-master.zip</p>
+</li>
+<li><p>libfastcommon-1.0.36.tar.gz</p>
+</li>
+<li><p>nginx-1.8.1.tar.gz</p>
+</li>
+</ul>
+<h3 id="集群部署"><a href="#集群部署" class="headerlink" title="集群部署"></a>集群部署</h3><p><font color="#008000">Tracker和Storage部署</font></p>
+<ul>
+<li><p>1：节点1，节2，节点3分别安装FastDFS，具体安装参考上篇文章：FastDFS极速入门</p>
+<br></li>
+<li><p>2：分别关闭三个节点的防火墙，或者配置防火墙开放端口，关闭防火墙: systemctl stop firewalld</p>
+</li>
+<li><p>3：修改节点1的tracker.conf配置文件：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;mkdir /data/fdfs-tracker</span><br><span class="line"></span><br><span class="line">&gt;vi /etc/fdfs/tracker.conf</span><br></pre></td></tr></table></figure>
+
+<p>  把base_path修改为：base_path=/data/fdfs-tracker</p>
+</li>
+<li><p>4：修改节点2的tracker.conf配置文件：同上</p>
+</li>
+<li><p>5：修改节点1的storage.conf配置文件：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; mkdir /data/fdfs-storage/base</span><br><span class="line"></span><br><span class="line">&gt; mkdir /data/fdfs-storage/storage0</span><br><span class="line"></span><br><span class="line">&gt;vi /etc/fdfs/storage.conf</span><br><span class="line"></span><br><span class="line">把group_name修改为：group_name=group1</span><br><span class="line"></span><br><span class="line">把base_path修改为：base_path=/data/fdfs-storage/base</span><br><span class="line"></span><br><span class="line">把store_path0修改为：store_path0=/data/fdfs-storage/storage0</span><br><span class="line"></span><br><span class="line">把tracker_server修改两个tracker节点地址：</span><br><span class="line"></span><br><span class="line">    tracker_server=192.168.72.135:22122</span><br><span class="line"></span><br><span class="line">    tracker_server=192.168.72.136:22122</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>6：修改节点2的storage.conf配置文件，同步骤5。</p>
+<br>
+</li>
+<li><p>7：修改节点3的storage.conf配置文件，</p>
+<p>  把group_name修改为：group_name=group2</p>
+<p>  其他同步骤5。</p>
+<br>
+8：节点1，节点2上启动tracker服务
+
+<blockquote>
+<p>service fdfs_trackerd start</p>
+</blockquote>
+</li>
+</ul>
+<p>9：节点1，节点2和节点3上启动storage服务</p>
+<pre><code>&gt;service fdfs_storaged start</code></pre><p>Tracker和Storage安装完成，可以使用FastDFS自带的客户端进行上传下载测试，具体操作方法，参考上篇</p>
+<p><font color="#008000">fastdfs-nginx-module和nginx安装</font></p>
+<ul>
+<li>所有节点安装fastdfs-nginx-module模块<br></li>
+<li>fastdfs-nginx-module模块作用：</li>
+</ul>
+<p>文件上传到组内一个storage存储后，storage服务会吧文件同步到组内其他storage，这就存在时间延时问题，如果此时客户端通过nginx访问到还未同步完成的组内其他storage会导致文件不存在无法访问错误，fastdfs-nginx-module可以解决该问题的发生，通过重定向到源storage节点来获取文件。</p>
+<ul>
+<li><p>root目录解压fastdfs-nginx-module：</p>
+<blockquote>
+<p>unzip fastdfs-nginx-module.zip</p>
+</blockquote>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><p>安装依赖包：</p>
+<blockquote>
+<p>yum install gcc gcc-c++ make automake autoconf libtool pcre* zlib openssl openssl-devel</p>
+</blockquote>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><p>安装nginx</p>
+<blockquote>
+<p>tar -zxvf nginx-1.8.1.tar.gz<br>cd nginx-1.8.1<br>./configure  –prefix=/opt/nginx  –add-module=/roo/fastdfs-nginx-module/src<br>make &amp;&amp; make install</p>
+</blockquote>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><p>复制fastdfs-nginx-module中配置文件到/etc/fdfs目录，并修改配置文件：</p>
+<blockquote>
+<p>cp /root/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs<br>vi  /etc/fdfs/mod_fastdfs.conf</p>
+</blockquote>
+<p>  tracker_server修改为：</p>
+<pre><code>tracker_server=192.168.72.135:22122
+tracker_server=192.168.72.136:22122</code></pre><p>  group_name修改为：</p>
+<pre><code>节点1：group_name=group1
+
+节点2：group_name=group1
+
+节点3：group_name=group2</code></pre><p>  url_have_group_name修改为：</p>
+<pre><code>url_have_group_name = true</code></pre></li>
+<li><p>复制FastDFS部分配置文件到/etc/fdfs目录：</p>
+<blockquote>
+<p>cd /root/fastdfs-5.1/conf<br>cp http.conf  mime.types  /etc/fdfs/</p>
+</blockquote>
+</li>
+</ul>
+<p>修改nginx.conf配置文件：</p>
+<p><img src="/img/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B602FastDFS%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%AE%9E%E6%88%9804.png" alt></p>
+<ul>
+<li><p>启动nginx：</p>
+<blockquote>
+<p>./nginx  -c  conf/nginx.conf</p>
+</blockquote>
+</li>
+</ul>
+<p>到此FastDFS集群已经搭建完成，文件上传后可以通过任意storage节点上的nginx来获得文件</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>FastDFS提供了C，PHP和java客户端，选用java客户端来进行实战。</p>
+<p>创建maven工程，pom.xml文件添加依赖：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;net.oschina.zcx7878&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;fastdfs-client-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.27.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">添加配置文件</font></p>
+<p>src/main/resoureces目录下添加fdfs_clent.conf配置文件，内容如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">connect_timeout = 60</span><br><span class="line">network_timeout = 60</span><br><span class="line">charset = UTF-8</span><br><span class="line">http.tracker_http_port = 8080</span><br><span class="line">http.anti_steal_token = no</span><br><span class="line">#tracker服务地址</span><br><span class="line">tracker_server = 192.168.72.135:22122</span><br><span class="line">tracker_server = 192.168.72.136:22122</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">创建FdfsClient类</font><br>静态代码块：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    private static StorageClient1 storageClient1 = null;</span><br><span class="line">    private static String trackerServerUrl = null;</span><br><span class="line">    //初始化FastDFS Client</span><br><span class="line">    static&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            ClientGlobal.init(&quot;src/main/resources/fdfs_client.conf&quot;);</span><br><span class="line">            TrackerClient trackerClient = new TrackerClient(ClientGlobal.g_tracker_group);</span><br><span class="line">            TrackerServer trackerServer = trackerClient.getConnection();</span><br><span class="line">            if (trackerServer == null)&#123;</span><br><span class="line">                System.out.println(&quot;getConnect  return null&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            trackerServerUrl = trackerServer.getInetSocketAddress().getHostString();</span><br><span class="line">            System.out.println(&quot;trackerServerUrl&quot;  + trackerServerUrl);</span><br><span class="line">            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer);</span><br><span class="line">            if (storageServer == null)&#123;</span><br><span class="line">                System.out.println(&quot;getStoreStorage return null&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            storageClient1 = new StorageClient1(trackerServer,storageServer);</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">文件上传</font></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  public static String uploadFile(File file, String fileExt, Map&lt;String,String&gt; metaList) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            byte[] buff = FileUtils.getFileByte(file);</span><br><span class="line">            NameValuePair[] nameValuePairs = null;</span><br><span class="line">            if (metaList != null) &#123;</span><br><span class="line">                nameValuePairs = new NameValuePair[metaList.size()];</span><br><span class="line">                int index = 0;</span><br><span class="line">                for (Iterator&lt;Map.Entry&lt;String,String&gt;&gt; iterator = metaList.entrySet().iterator(); iterator.hasNext();) &#123;</span><br><span class="line">                    Map.Entry&lt;String,String&gt; entry = iterator.next();</span><br><span class="line">                    String name = entry.getKey();</span><br><span class="line">                    String value = entry.getValue();</span><br><span class="line">                    nameValuePairs[index++] = new NameValuePair(name,value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">           return &quot;http://&quot;+ trackerServerUrl + &quot;/&quot; + storageClient1.upload_file1(buff, fileExt, nameValuePairs);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">文件下载</font></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    public static int downloadFile(String fileId, String filePath,String fileName) &#123;</span><br><span class="line">        FileOutputStream fos = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            byte[] content = storageClient1.download_file1(fileId);</span><br><span class="line">            FileUtils.getFile(content,  filePath, fileName);</span><br><span class="line">            return 0;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            if (fos != null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    fos.close();</span><br><span class="line">                &#125; catch (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">获得文件属性</font></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    public static Map&lt;String,String&gt; getFileMetadata(String fileId) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            NameValuePair[] metaList = storageClient1.get_metadata1(fileId);</span><br><span class="line">            if (metaList != null) &#123;</span><br><span class="line">                HashMap&lt;String,String&gt; map = new HashMap&lt;String, String&gt;();</span><br><span class="line">                for (NameValuePair metaItem : metaList) &#123;</span><br><span class="line">                    map.put(metaItem.getName(),metaItem.getValue());</span><br><span class="line">                &#125;</span><br><span class="line">                return map;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#008000">文件删除</font></p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    public static int deleteFile(String fileId) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return storageClient1.delete_file1(fileId);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/QRCode.png" alt></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/QRcode.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/06/29/Docker01全面认识Docker和基本指令/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">【Docker】：全面认识Docker和基本指令</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/06/05/开源组件01FastDFS极速入门与安装/">
+                <span class="level-item">开源组件:FastDFS极速入门与安装</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'v9hhdvB9PpSO7k9YNUVKRpHD-gzGzoHsz',
+        app_key: '6GiYcSGTuKAQukrNP5xQLbBB',
+        placeholder: '欢迎评论，技术交流！'
+    });
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/self.png" alt="码农code之路">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        码农code之路
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        红烧肉
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>北京.西二旗</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        61
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        8
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        28
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NDE0NjMwNw==&amp;scene=124#wechat_redirect" target="_blank">
+                扫码关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/ppoffice">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="https://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="https://dribbble.com">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/woniu211111" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/C-基础/">
+            <span class="level-start">
+                <span class="level-item">C++基础</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/C-应用篇/">
+            <span class="level-start">
+                <span class="level-item">C++应用篇</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Docker/">
+            <span class="level-start">
+                <span class="level-item">Docker</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Qt/">
+            <span class="level-start">
+                <span class="level-item">Qt</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Spring-Boot/">
+            <span class="level-start">
+                <span class="level-item">Spring Boot</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/开源/">
+            <span class="level-start">
+                <span class="level-item">开源</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/开源组件/">
+            <span class="level-start">
+                <span class="level-item">开源组件</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/">
+            <span class="level-start">
+                <span class="level-item">数据结构与算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/const/" style="font-size: 10px;">const</a> <a href="/tags/delete/" style="font-size: 10px;">delete</a> <a href="/tags/docker/" style="font-size: 20px;">docker</a> <a href="/tags/free/" style="font-size: 10px;">free</a> <a href="/tags/malloc/" style="font-size: 10px;">malloc</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/内联函数/" style="font-size: 10px;">内联函数</a> <a href="/tags/函数重载/" style="font-size: 10px;">函数重载</a> <a href="/tags/友元/" style="font-size: 10px;">友元</a> <a href="/tags/命名空间/" style="font-size: 10px;">命名空间</a> <a href="/tags/构造函数/" style="font-size: 10px;">构造函数</a> <a href="/tags/析构函数/" style="font-size: 10px;">析构函数</a> <a href="/tags/标准输入与输出/" style="font-size: 10px;">标准输入与输出</a> <a href="/tags/树/" style="font-size: 15px;">树</a> <a href="/tags/浅拷贝/" style="font-size: 10px;">浅拷贝</a> <a href="/tags/深拷贝/" style="font-size: 10px;">深拷贝</a> <a href="/tags/类的分离式写法/" style="font-size: 10px;">类的分离式写法</a> <a href="/tags/继承/" style="font-size: 10px;">继承</a> <a href="/tags/虚继承/" style="font-size: 10px;">虚继承</a> <a href="/tags/配置文件/" style="font-size: 10px;">配置文件</a> <a href="/tags/链表/" style="font-size: 15px;">链表</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/博文导航/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="博文导航">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T04:00:21.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/博文导航/" class="has-link-black-ter is-size-6">博文导航</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/07/12/Applied11基于Snappy实现数据压缩和解压/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="基于Snappy实现数据压缩和解压">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-12T08:38:35.000Z">2019-07-12</time></div>
+                    <a href="/2019/07/12/Applied11基于Snappy实现数据压缩和解压/" class="has-link-black-ter is-size-6">基于Snappy实现数据压缩和解压</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/05/14/Qt10vs2017+qt5.x编译32位应用/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Qt:vs2017+qt5.x编译32位应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-14T07:28:50.000Z">2019-05-14</time></div>
+                    <a href="/2019/05/14/Qt10vs2017+qt5.x编译32位应用/" class="has-link-black-ter is-size-6">Qt:vs2017+qt5.x编译32位应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Qt/">Qt</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/05/09/Qt09菜单栏工具栏/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Qt:菜单栏，工具栏和状态栏">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T07:28:50.000Z">2019-05-09</time></div>
+                    <a href="/2019/05/09/Qt09菜单栏工具栏/" class="has-link-black-ter is-size-6">Qt:菜单栏，工具栏和状态栏</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Qt/">Qt</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/04/23/Qt08QTime类/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Qt:QTime类">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-23T05:42:59.000Z">2019-04-23</time></div>
+                    <a href="/2019/04/23/Qt08QTime类/" class="has-link-black-ter is-size-6">Qt:QTime类</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Qt/">Qt</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">11</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ELK/">
+                        <span class="tag">ELK</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JSON/">
+                        <span class="tag">JSON</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Snappy/">
+                        <span class="tag">Snappy</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/XML/">
+                        <span class="tag">XML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/const/">
+                        <span class="tag">const</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/delete/">
+                        <span class="tag">delete</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker/">
+                        <span class="tag">docker</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/free/">
+                        <span class="tag">free</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/malloc/">
+                        <span class="tag">malloc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/mysql/">
+                        <span class="tag">mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/new/">
+                        <span class="tag">new</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/rabbitmq/">
+                        <span class="tag">rabbitmq</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redis/">
+                        <span class="tag">redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内联函数/">
+                        <span class="tag">内联函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数重载/">
+                        <span class="tag">函数重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/友元/">
+                        <span class="tag">友元</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/命名空间/">
+                        <span class="tag">命名空间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/构造函数/">
+                        <span class="tag">构造函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/析构函数/">
+                        <span class="tag">析构函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/树/">
+                        <span class="tag">树</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/浅拷贝/">
+                        <span class="tag">浅拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深拷贝/">
+                        <span class="tag">深拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/类的分离式写法/">
+                        <span class="tag">类的分离式写法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚继承/">
+                        <span class="tag">虚继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/配置文件/">
+                        <span class="tag">配置文件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/链表/">
+                        <span class="tag">链表</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/07/18/博文导航/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="博文导航">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-18T04:00:21.000Z">2019-07-18</time></div>
+                    <a href="/2019/07/18/博文导航/" class="has-link-black-ter is-size-6">博文导航</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/07/12/Applied11基于Snappy实现数据压缩和解压/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="基于Snappy实现数据压缩和解压">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-07-12T08:38:35.000Z">2019-07-12</time></div>
+                    <a href="/2019/07/12/Applied11基于Snappy实现数据压缩和解压/" class="has-link-black-ter is-size-6">基于Snappy实现数据压缩和解压</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/C-应用篇/">C++应用篇</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/05/14/Qt10vs2017+qt5.x编译32位应用/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Qt:vs2017+qt5.x编译32位应用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-14T07:28:50.000Z">2019-05-14</time></div>
+                    <a href="/2019/05/14/Qt10vs2017+qt5.x编译32位应用/" class="has-link-black-ter is-size-6">Qt:vs2017+qt5.x编译32位应用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Qt/">Qt</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/05/09/Qt09菜单栏工具栏/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Qt:菜单栏，工具栏和状态栏">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-09T07:28:50.000Z">2019-05-09</time></div>
+                    <a href="/2019/05/09/Qt09菜单栏工具栏/" class="has-link-black-ter is-size-6">Qt:菜单栏，工具栏和状态栏</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Qt/">Qt</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2019/04/23/Qt08QTime类/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Qt:QTime类">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-04-23T05:42:59.000Z">2019-04-23</time></div>
+                    <a href="/2019/04/23/Qt08QTime类/" class="has-link-black-ter is-size-6">Qt:QTime类</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Qt/">Qt</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">11</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ELK/">
+                        <span class="tag">ELK</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JSON/">
+                        <span class="tag">JSON</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Snappy/">
+                        <span class="tag">Snappy</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/XML/">
+                        <span class="tag">XML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/const/">
+                        <span class="tag">const</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/delete/">
+                        <span class="tag">delete</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker/">
+                        <span class="tag">docker</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/free/">
+                        <span class="tag">free</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/malloc/">
+                        <span class="tag">malloc</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/mysql/">
+                        <span class="tag">mysql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/new/">
+                        <span class="tag">new</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/rabbitmq/">
+                        <span class="tag">rabbitmq</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redis/">
+                        <span class="tag">redis</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/内联函数/">
+                        <span class="tag">内联函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/函数重载/">
+                        <span class="tag">函数重载</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/友元/">
+                        <span class="tag">友元</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/命名空间/">
+                        <span class="tag">命名空间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/构造函数/">
+                        <span class="tag">构造函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/析构函数/">
+                        <span class="tag">析构函数</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/标准输入与输出/">
+                        <span class="tag">标准输入与输出</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/树/">
+                        <span class="tag">树</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/浅拷贝/">
+                        <span class="tag">浅拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深拷贝/">
+                        <span class="tag">深拷贝</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/类的分离式写法/">
+                        <span class="tag">类的分离式写法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/继承/">
+                        <span class="tag">继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/虚继承/">
+                        <span class="tag">虚继承</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/配置文件/">
+                        <span class="tag">配置文件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/链表/">
+                        <span class="tag">链表</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="开源组件:FastDFS集群搭建与实战" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 红烧肉&nbsp;
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271552012'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271552012%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
+
+		</p><p align="left"> 津ICP备19004298号-1 </p>	
+	
+		<!--  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> -->
+                
+                <p></p>
+            </div>
+<!--            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div> -->
+        </div>
+    </div>
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

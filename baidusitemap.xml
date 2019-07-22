@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.haoservice.cn/2017/01/13/SB08Mybatis%E4%BD%BF%E7%94%A8%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6PageHelper/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2018/05/04/SB11Spring%20boot%E5%90%8C%E6%97%B6%E6%94%AF%E6%8C%81HTTP%E5%92%8CHTTPS/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/16/SB10%E9%9B%86%E6%88%90SentinelRedis/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/14/SB09%E9%9B%86%E6%88%90redis/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/13/SB07%E9%9B%86%E6%88%90MyBatis/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/12/SB06%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA%E9%85%8D%E7%BD%AElog4j2/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/11/SB05%E4%BD%BF%E7%94%A8properties%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/10/SB04%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3properties/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/10/SB03%E4%BD%BF%E7%94%A8devtools%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/08/SB02%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AAweb%E5%B7%A5%E7%A8%8Bhelloworld/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/01/08/SB01Eclipse%E5%AE%89%E8%A3%85spring-tool-suite%E6%8F%92%E4%BB%B6/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/02/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E4%B8%A4%E5%88%86%E9%92%9F%E6%90%9E%E6%87%82%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/01/08/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B604Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/01/08/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B603Git%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2018/06/20/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B602FastDFS%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%AE%9E%E6%88%98/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2018/06/05/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B601FastDFS%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%89%E8%A3%85/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/08/11/%E5%BC%80%E6%BA%9001%E8%82%A1%E7%A5%A8%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B%E6%BA%90%E7%A0%81(%E8%9C%97%E7%89%9B%E8%82%A1%E7%A5%A8%E8%BD%AF%E4%BB%B6)/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/07/18/%E5%8D%9A%E6%96%87%E5%AF%BC%E8%88%AA/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/05/14/Qt10vs2017+qt5.x%E7%BC%96%E8%AF%9132%E4%BD%8D%E5%BA%94%E7%94%A8/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/05/09/Qt09%E8%8F%9C%E5%8D%95%E6%A0%8F%E5%B7%A5%E5%85%B7%E6%A0%8F/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/23/Qt08QTime%E7%B1%BB/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/23/Qt07QDate%E7%B1%BB/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/23/Qt06StyleSheet%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/10/Qt05%E5%B8%B8%E7%94%A8%E6%8E%A7%E4%BB%B6QSpinBox%E5%92%8CQDoubleSpinBox/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/10/Qt04%E5%B8%B8%E7%94%A8%E6%8E%A7%E4%BB%B6QLineEdit/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/06/Qt03%E5%AE%9E%E7%8E%B0%E7%B3%BB%E7%BB%9F%E6%89%98%E7%9B%98/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/03/21/Qt02%E6%9B%B4%E6%94%B9%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%9B%BE%E6%A0%87%E5%92%8C%E4%BB%BB%E5%8A%A1%E6%A0%8F%E5%9B%BE%E6%A0%87/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/03/21/Qt01%E7%AC%AC%E4%B8%80%E4%B8%AAQt%E7%A8%8B%E5%BA%8FHello%20World/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/05/DSA04%E4%BA%8C%E5%8F%89%E6%A0%91%E5%88%9B%E5%BB%BA%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/04/DSA03%E4%BA%8C%E5%88%86%E9%92%9F%E5%88%9D%E8%AF%86%E6%A0%91/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2018/01/28/DSA02%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E4%B8%8E%E5%B0%81%E8%A3%85(%E6%9C%89%E5%A4%B4)/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/04/02/DSA01%E9%80%9A%E4%BF%97%E6%98%93%E6%87%82%E8%AF%B4%E9%93%BE%E8%A1%A8/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2018/07/09/Docker04docker%E5%AE%89%E8%A3%85redis/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2019/07/12/Applied11%E5%9F%BA%E4%BA%8ESnappy%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/07/26/Applied10Rabbitmq%20C++%E5%AE%A2%E6%88%B7%E7%AB%AF%20Rabbitmq%20Client/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
+    <loc>http://www.haoservice.cn/2017/07/28/Applied09C++%E5%AE%9E%E7%8E%B016%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%88%90int%E6%95%B4%E5%BD%A2%E5%80%BC/</loc>
+    <lastmod>2019-07-22</lastmod>
+  </url>  <url>
     <loc>http://www.haoservice.cn/2018/07/09/Docker03docker%E5%AE%89%E8%A3%85mysql/</loc>
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
@@ -8,9 +116,6 @@
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
     <loc>http://www.haoservice.cn/2018/06/29/Docker01%E5%85%A8%E9%9D%A2%E8%AE%A4%E8%AF%86Docker%E5%92%8C%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4/</loc>
-    <lastmod>2019-07-19</lastmod>
-  </url>  <url>
-    <loc>http://www.haoservice.cn/2019/07/18/%E5%8D%9A%E6%96%87%E5%AF%BC%E8%88%AA/</loc>
     <lastmod>2019-07-19</lastmod>
   </url>  <url>
     <loc>http://www.haoservice.cn/2017/09/20/Applied08JNI%E6%8A%80%E6%9C%AF/</loc>
