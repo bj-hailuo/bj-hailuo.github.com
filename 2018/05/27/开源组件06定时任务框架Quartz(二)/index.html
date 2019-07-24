@@ -2,24 +2,23 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>内联函数 - 码农code之路个人博客</title>
+<title>开源组件:定时任务框架Quartz(二) - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
-<meta name="keywords" content="内联函数">
+    <meta name="description" content="上一篇文章完成了第一个Quartz程序的编写，这篇从Quartz中的几个重要对象来更深一层认识Quartz框架。 Job和JobDetailJob是Quartz中的一个接口，接口下只有execute方法，在这个方法中编写业务逻辑。 该接口的源码： 12345package org.quartz; public interface Job &amp;#123;    void execute(JobExec">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内联函数">
-<meta property="og:url" content="http://www.haoservice.cn/2015/07/17/03内联函数/index.html">
+<meta property="og:title" content="开源组件:定时任务框架Quartz(二)">
+<meta property="og:url" content="http://www.haoservice.cn/2018/05/27/开源组件06定时任务框架Quartz(二)/index.html">
 <meta property="og:site_name" content="码农code之路个人博客">
-<meta property="og:description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
+<meta property="og:description" content="上一篇文章完成了第一个Quartz程序的编写，这篇从Quartz中的几个重要对象来更深一层认识Quartz框架。 Job和JobDetailJob是Quartz中的一个接口，接口下只有execute方法，在这个方法中编写业务逻辑。 该接口的源码： 12345package org.quartz; public interface Job &amp;#123;    void execute(JobExec">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.haoservice.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-22T09:35:21.270Z">
+<meta property="og:updated_time" content="2019-07-24T10:55:32.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内联函数">
-<meta name="twitter:description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
+<meta name="twitter:title" content="开源组件:定时任务框架Quartz(二)">
+<meta name="twitter:description" content="上一篇文章完成了第一个Quartz程序的编写，这篇从Quartz中的几个重要对象来更深一层认识Quartz框架。 Job和JobDetailJob是Quartz中的一个接口，接口下只有execute方法，在这个方法中编写业务逻辑。 该接口的源码： 12345package org.quartz; public interface Job &amp;#123;    void execute(JobExec">
 <meta name="twitter:image" content="http://www.haoservice.cn/images/og_image.png">
 
 
@@ -92,7 +91,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="内联函数" height="28">
+                <img src="/images/logo.svg" alt="开源组件:定时任务框架Quartz(二)" height="28">
             
             </a>
         </div>
@@ -143,17 +142,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2015-07-17T03:22:46.000Z">2015-07-17</time>
+                <time class="level-item has-text-grey" datetime="2018-05-26T16:27:30.000Z">2018-05-27</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
+                <a class="has-link-grey -link" href="/categories/开源组件/">开源组件</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 289 个字)
+                    9 分钟 读完 (大约 1302 个字)
                 </span>
                 
                 
@@ -162,30 +161,59 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                内联函数
+                开源组件:定时任务框架Quartz(二)
             
         </h1>
         <div class="content">
-            <p>函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。</p>
-<a id="more"></a> 
+            <p>上一篇文章完成了第一个Quartz程序的编写，这篇从Quartz中的几个重要对象来更深一层认识Quartz框架。</p>
+<h3 id="Job和JobDetail"><a href="#Job和JobDetail" class="headerlink" title="Job和JobDetail"></a>Job和JobDetail</h3><p>Job是Quartz中的一个接口，接口下只有execute方法，在这个方法中编写业务逻辑。</p>
+<p>该接口的源码：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package org.quartz;</span><br><span class="line"> </span><br><span class="line">public interface Job &#123;</span><br><span class="line">    void execute(JobExecutionContext var1) throws JobExecutionException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<a id="more"></a>
+<p>每次调度执行Job时，调用execute方法前会创建一个新的Job实例，执行完后，关联的Job对象实例会被释放，随后jvm执行GC。</p>
+<p>JobDetail是用来绑定Job，为Job实例提供了许多属性，以及JobDataMap成员变量属性。调度器scheduler通过JobDetail对象来添加Job实例。</p>
+<p>属性：</p>
+<pre><code>1.    name
 
-<p>如果一个函数在程序运行过程中被成千上万次调用，那么这个开销也是不容忽视的，C++中引入了内联函数，直接在函数前面加上inline，在编译过程中直接把函数代码内嵌，避免了运行过程中的函数调用，但会增加程序代码段的空间。可以任务以空间来换取时间。</p>
-<h6 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h6><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline int foo(int a, int b) </span><br><span class="line">&#123; </span><br><span class="line">    return a+b; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+2.    group
 
-<p>###总结<br>内联函数优点：程序运行时避免了调用函数入栈，出栈导致的额外开销。</p>
-<p>内联函数缺点：编译时直接函数代码内嵌，增加了代码段空间。</p>
-<p>一般函数体行数不多(谷歌编程规范明确指出内联函数不超过10行代码)，且被频繁调用的函数适合用内联函数。</p>
+3.    jobClass
 
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/内联函数/">内联函数</a>
-                </div>
-            </div>
+4.    jobDataMap</code></pre><h3 id="JobExecutionContext"><a href="#JobExecutionContext" class="headerlink" title="JobExecutionContext"></a>JobExecutionContext</h3><p>当调度器Scheduler调用一个Job时，就会将JobExecutionContext传递给Job的execute()方法，Job能通过JobExecutionContext对象访问到Quartz运行时的环境以及Job本身的详细数据信息。</p>
+<p>代码演示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class HelloWorldJob implements Job &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException &#123;</span><br><span class="line">        String strTime = new SimpleDateFormat(&quot;HH-mm-ss&quot;).format(new Date());</span><br><span class="line">        System.out.println( strTime + &quot;:Hello World！&quot;);</span><br><span class="line">        System.out.println(&quot;JobDetail&apos;name:&quot; + jobExecutionContext.getJobDetail().getKey().getName());</span><br><span class="line">        System.out.println(&quot;JobDetail&apos;group:&quot; + jobExecutionContext.getJobDetail().getKey().getGroup());</span><br><span class="line">        System.out.println(&quot;JobDetail&apos;class:&quot; + jobExecutionContext.getJobDetail().getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="JobDataMap"><a href="#JobDataMap" class="headerlink" title="JobDataMap"></a>JobDataMap</h3><p>任务调度时可以通过JobExecutionContext获取JobDataMap，可以装在任何可序列化的数据对象，JobDataMap实现了JDK的Map接口，可以以Key-Value的形式存储数据。</p>
+<p>实战：JobDetail和Trigger传递数据，HelloWorldJob类execute三种方式获取数据。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//创建JobDetail实例，并与HelloWordlJob类绑定</span><br><span class="line">JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">        .usingJobData(&quot;key1&quot;,&quot;this is jobDetail&quot;)</span><br><span class="line">        .build();</span><br><span class="line"> </span><br><span class="line">//创建触发器Trigger实例(立即执行，每隔1S执行一次)</span><br><span class="line">Trigger trigger = TriggerBuilder.newTrigger()</span><br><span class="line">        .withIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">        .usingJobData(&quot;key2&quot;, &quot;this is trigger&quot;)</span><br><span class="line">        .startNow()</span><br><span class="line">        .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(1).repeatForever())</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>HelloWorldJob获取数据：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class HelloWorldJob implements Job &#123;</span><br><span class="line">    private String key1;</span><br><span class="line">    private String key2;</span><br><span class="line"> </span><br><span class="line">    public String getKey1() &#123;</span><br><span class="line">        return key1;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void setKey1(String key1) &#123;</span><br><span class="line">        this.key1 = key1;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public String getKey2() &#123;</span><br><span class="line">        return key2;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void setKey2(String key2) &#123;</span><br><span class="line">        this.key2 = key2;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException &#123;</span><br><span class="line">        String strTime = new SimpleDateFormat(&quot;HH-mm-ss&quot;).format(new Date());</span><br><span class="line">        System.out.println( strTime + &quot;:Hello World！&quot;);</span><br><span class="line"> </span><br><span class="line">        //获取DataMap数据方法一</span><br><span class="line">        System.out.println(&quot;JobDetail JobDataMap:&quot; + jobExecutionContext.getJobDetail().getJobDataMap().get(&quot;key1&quot;));</span><br><span class="line">        System.out.println(&quot;Trigger JobDataMap:&quot; + jobExecutionContext.getTrigger().getJobDataMap().get(&quot;key2&quot;));</span><br><span class="line"> </span><br><span class="line">        //获取DataMap数据方法二</span><br><span class="line">        System.out.println(&quot;JobDataMap:&quot; + jobExecutionContext.getMergedJobDataMap().get(&quot;key1&quot;));</span><br><span class="line">        System.out.println(&quot;JobDataMap:&quot; + jobExecutionContext.getMergedJobDataMap().get(&quot;key2&quot;));</span><br><span class="line"> </span><br><span class="line">        //获取数据方法三</span><br><span class="line">        System.out.println(&quot;通过成员变量获取&quot; + key1);</span><br><span class="line">        System.out.println(&quot;通过成员变量获取&quot; + key2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h3><p>Trigger是Quartz中的触发器，任务执行时会通知调度器Scheduler何时出发，几个重要的属性。</p>
+<pre><code>1.    Jobkey：表示job实例的标识
+
+2.    StartTime：表示触发器首次被触发的时间(Java.util.Date)。
+
+3.    EndTime：表示触发器结束触发的时间(Java.util.Date)</code></pre><p>实战：实现5S后执行，10S后结束，期间每隔1S执行一次定时任务</p>
+<p>代码演示：</p>
+<p>MyScheduler类</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class MyScheduler &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) throws SchedulerException &#123;</span><br><span class="line">        //创建调度器Schedule</span><br><span class="line">        SchedulerFactory schedulerFactory = new StdSchedulerFactory();</span><br><span class="line">        Scheduler scheduler = schedulerFactory.getScheduler();</span><br><span class="line"> </span><br><span class="line">        //创建JobDetail实例，并与HelloWordlJob类绑定</span><br><span class="line">        JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //创建触发器Trigger实例(5S后执行，10S后结束)</span><br><span class="line">            //开始时间(5S后)</span><br><span class="line">        Date date1 = new Date();</span><br><span class="line">        date1.setTime(date1.getTime() + 5000);</span><br><span class="line"> </span><br><span class="line">            //结束时间(10S后)</span><br><span class="line">        Date date2 = new Date();</span><br><span class="line">        date2.setTime(date2.getTime() + 10000);</span><br><span class="line"> </span><br><span class="line">        Trigger trigger = TriggerBuilder.newTrigger()</span><br><span class="line">                .withIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">                .startAt(date1)</span><br><span class="line">                .endAt(date2)</span><br><span class="line">                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(1).repeatForever())</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //开始执行</span><br><span class="line">        scheduler.scheduleJob(jobDetail, trigger);</span><br><span class="line">        scheduler.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SimpleTrigger"><a href="#SimpleTrigger" class="headerlink" title="SimpleTrigger"></a>SimpleTrigger</h3><p>SimpleTrigger可以实现在一个指定时间段内执行一次作业任务或一个时间段内多次执行作业任务。</p>
+<p>实战：5S后开始执行，间隔时间为1S，第一次执行后连续执行3次</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package quartz2;</span><br><span class="line"> </span><br><span class="line">import org.quartz.*;</span><br><span class="line">import org.quartz.impl.StdSchedulerFactory;</span><br><span class="line"> </span><br><span class="line">import java.util.Date;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * created by Java-Road</span><br><span class="line"> * created in 2018/5/27</span><br><span class="line"> */</span><br><span class="line">public class MyScheduler2 &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) throws SchedulerException &#123;</span><br><span class="line">        //创建调度器Schedule</span><br><span class="line">        SchedulerFactory schedulerFactory = new StdSchedulerFactory();</span><br><span class="line">        Scheduler scheduler = schedulerFactory.getScheduler();</span><br><span class="line"> </span><br><span class="line">        //创建JobDetail实例，并与HelloWordlJob类绑定</span><br><span class="line">        JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //创建触发器Trigger实例(5S后执行,一直执行)</span><br><span class="line">        //开始时间(5S后)</span><br><span class="line">        Date date1 = new Date();</span><br><span class="line">        date1.setTime(date1.getTime() + 5000);</span><br><span class="line"> </span><br><span class="line">        SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()</span><br><span class="line">                .withIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">                .startAt(date1)</span><br><span class="line">                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(1)</span><br><span class="line">                            .withRepeatCount(3))</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //开始执行</span><br><span class="line">        scheduler.scheduleJob(jobDetail, trigger);</span><br><span class="line">        scheduler.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="CronTrigger"><a href="#CronTrigger" class="headerlink" title="CronTrigger"></a>CronTrigger</h3><p>CronTrigger功能非常强大，是基于日历的作业调度，而SimpleTrigger是精准指定间隔，所以相比SimpleTrigger，CroTrigger更加常用。CroTrigger是基于Cron表达式的，先了解下Cron表达式：</p>
+<p>由7个子表达式组成字符串的，格式如下：</p>
+<p>[秒] [分] [小时] [日] [月] [周] [年]</p>
+<p>Cron表达式的语法就不多说了，因为我也记不住只能度娘，给大家提供个在线生成Cron表达式的工具：<a href="http://cron.qqe2.com/" target="_blank" rel="noopener">http://cron.qqe2.com/</a></p>
+<p>实战：实现每周一到周五上午10:30执行定时任务</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package quartz2;</span><br><span class="line"> </span><br><span class="line">import org.quartz.*;</span><br><span class="line">import org.quartz.impl.StdSchedulerFactory;</span><br><span class="line"> </span><br><span class="line">import java.util.Date;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * created by Java-Road</span><br><span class="line"> * created in 2018/5/27</span><br><span class="line"> */</span><br><span class="line">public class MyScheduler3 &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) throws SchedulerException &#123;</span><br><span class="line">        //创建调度器Schedule</span><br><span class="line">        SchedulerFactory schedulerFactory = new StdSchedulerFactory();</span><br><span class="line">        Scheduler scheduler = schedulerFactory.getScheduler();</span><br><span class="line"> </span><br><span class="line">        //创建JobDetail实例，并与HelloWordlJob类绑定</span><br><span class="line">        JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //创建触发器CronTrigger实例(每周一到周五10:30执行任务)</span><br><span class="line">        CronTrigger trigger = (CronTrigger) TriggerBuilder.newTrigger()</span><br><span class="line">                .withIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">                .startNow()</span><br><span class="line">                .withSchedule(CronScheduleBuilder.cronSchedule(&quot;* 30 10 ? * MON-FRI *&quot;))</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //开始执行</span><br><span class="line">        scheduler.scheduleJob(jobDetail, trigger);</span><br><span class="line">        scheduler.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/QRCode.png" alt></p>
+
         </div>
         
         
@@ -220,16 +248,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2015/07/17/04new和delete/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/27/开源组件05定时任务框架Quartz(一)/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">new和delete</span>
+                <span class="level-item">开源组件:定时任务框架Quartz(一)</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2015/07/16/02函数重载/">
-                <span class="level-item">函数重载</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/04/SB11Spring boot同时支持HTTP和HTTPS/">
+                <span class="level-item">Spring Boot入门十一:Spring boot同时支持HTTP和HTTPS</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1587,7 +1615,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="内联函数" height="28">
+                    <img src="/images/logo.svg" alt="开源组件:定时任务框架Quartz(二)" height="28">
                 
                 </a>
                 <p class="is-size-7">

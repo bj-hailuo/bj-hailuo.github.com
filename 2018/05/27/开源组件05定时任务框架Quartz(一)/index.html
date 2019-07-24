@@ -2,24 +2,23 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>内联函数 - 码农code之路个人博客</title>
+<title>开源组件:定时任务框架Quartz(一) - 码农code之路个人博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
-<meta name="keywords" content="内联函数">
+    <meta name="description" content="Quartz是OpenSymphony开源组织的一个开源项目，定时任务框架，纯Java语言实现，最新版本为2.3.0。 设计模式Quartz中使用的设计模式如下： 1.Builder模式  2.Factory模式  3.组件模式  4.链式模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内联函数">
-<meta property="og:url" content="http://www.haoservice.cn/2015/07/17/03内联函数/index.html">
+<meta property="og:title" content="开源组件:定时任务框架Quartz(一)">
+<meta property="og:url" content="http://www.haoservice.cn/2018/05/27/开源组件05定时任务框架Quartz(一)/index.html">
 <meta property="og:site_name" content="码农code之路个人博客">
-<meta property="og:description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
+<meta property="og:description" content="Quartz是OpenSymphony开源组织的一个开源项目，定时任务框架，纯Java语言实现，最新版本为2.3.0。 设计模式Quartz中使用的设计模式如下： 1.Builder模式  2.Factory模式  3.组件模式  4.链式模式">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.haoservice.cn/images/og_image.png">
-<meta property="og:updated_time" content="2019-07-22T09:35:21.270Z">
+<meta property="og:updated_time" content="2019-07-24T10:55:32.490Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内联函数">
-<meta name="twitter:description" content="函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。">
+<meta name="twitter:title" content="开源组件:定时任务框架Quartz(一)">
+<meta name="twitter:description" content="Quartz是OpenSymphony开源组织的一个开源项目，定时任务框架，纯Java语言实现，最新版本为2.3.0。 设计模式Quartz中使用的设计模式如下： 1.Builder模式  2.Factory模式  3.组件模式  4.链式模式">
 <meta name="twitter:image" content="http://www.haoservice.cn/images/og_image.png">
 
 
@@ -92,7 +91,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="内联函数" height="28">
+                <img src="/images/logo.svg" alt="开源组件:定时任务框架Quartz(一)" height="28">
             
             </a>
         </div>
@@ -143,17 +142,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2015-07-17T03:22:46.000Z">2015-07-17</time>
+                <time class="level-item has-text-grey" datetime="2018-05-26T16:27:30.000Z">2018-05-27</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/C-基础/">C++基础</a>
+                <a class="has-link-grey -link" href="/categories/开源组件/">开源组件</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 289 个字)
+                    2 分钟 读完 (大约 306 个字)
                 </span>
                 
                 
@@ -162,30 +161,36 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                内联函数
+                开源组件:定时任务框架Quartz(一)
             
         </h1>
         <div class="content">
-            <p>函数的使用使得相同代码不必多次重写，但会带来额外的开销，函数调用的过程中会有入栈和出栈，这些都会消耗时间。</p>
-<a id="more"></a> 
+            <p>Quartz是OpenSymphony开源组织的一个开源项目，定时任务框架，纯Java语言实现，最新版本为2.3.0。</p>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><p>Quartz中使用的设计模式如下：</p>
+<pre><code>1.Builder模式
 
+2.Factory模式
 
-<p>如果一个函数在程序运行过程中被成千上万次调用，那么这个开销也是不容忽视的，C++中引入了内联函数，直接在函数前面加上inline，在编译过程中直接把函数代码内嵌，避免了运行过程中的函数调用，但会增加程序代码段的空间。可以任务以空间来换取时间。</p>
-<h6 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h6><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline int foo(int a, int b) </span><br><span class="line">&#123; </span><br><span class="line">    return a+b; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+3.组件模式
 
-<p>###总结<br>内联函数优点：程序运行时避免了调用函数入栈，出栈导致的额外开销。</p>
-<p>内联函数缺点：编译时直接函数代码内嵌，增加了代码段空间。</p>
-<p>一般函数体行数不多(谷歌编程规范明确指出内联函数不超过10行代码)，且被频繁调用的函数适合用内联函数。</p>
+4.链式模式</code></pre><a id="more"></a>
 
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/内联函数/">内联函数</a>
-                </div>
-            </div>
+<h3 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h3><pre><code>1.调度器：scheduler
+
+2.任务：JobDetail
+
+3.触发器：Trigger，包括SimpleTrigger和CronTrigger</code></pre><h3 id="第一个Quartz程序"><a href="#第一个Quartz程序" class="headerlink" title="第一个Quartz程序"></a>第一个Quartz程序</h3><p>实现每隔1秒打印一个Hello Worlder</p>
+<p>1.创建Maven项目，添加依赖：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.quartz-scheduler&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;quartz&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.创建HelloWorldJob类</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package quartz;</span><br><span class="line"> </span><br><span class="line">import org.quartz.Job;</span><br><span class="line">import org.quartz.JobExecutionContext;</span><br><span class="line">import org.quartz.JobExecutionException;</span><br><span class="line"> </span><br><span class="line">import java.text.SimpleDateFormat;</span><br><span class="line">import java.util.Date;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * created by Java-Road</span><br><span class="line"> * created in 2018/5/26</span><br><span class="line"> */</span><br><span class="line">public class HelloWorldJob implements Job &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException &#123;</span><br><span class="line">        String strTime = new SimpleDateFormat(&quot;HH-mm-ss&quot;).format(new Date());</span><br><span class="line">        System.out.println( strTime + &quot;:Hello World！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.创建MyScheduler类</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package quartz;</span><br><span class="line"> </span><br><span class="line">import org.quartz.*;</span><br><span class="line">import org.quartz.impl.StdSchedulerFactory;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * created by Java-Road</span><br><span class="line"> * created in 2018/5/26</span><br><span class="line"> */</span><br><span class="line">public class MyScheduler &#123;</span><br><span class="line">    public static void main(String[] args) throws SchedulerException &#123;</span><br><span class="line">        //创建调度器Schedule</span><br><span class="line">        SchedulerFactory schedulerFactory = new StdSchedulerFactory();</span><br><span class="line">        Scheduler scheduler = schedulerFactory.getScheduler();</span><br><span class="line"> </span><br><span class="line">        //创建JobDetail实例，并与HelloWordlJob类绑定</span><br><span class="line">        JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //创建触发器Trigger实例(立即执行，每隔1S执行一次)</span><br><span class="line">        Trigger trigger = TriggerBuilder.newTrigger()</span><br><span class="line">                .withIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">                .startNow()</span><br><span class="line">                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(1).repeatForever())</span><br><span class="line">                .build();</span><br><span class="line"> </span><br><span class="line">        //开始执行</span><br><span class="line">        scheduler.scheduleJob(jobDetail, trigger);</span><br><span class="line">        scheduler.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/QRCode.png" alt></p>
+
         </div>
         
         
@@ -220,16 +225,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2015/07/17/04new和delete/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/06/05/开源组件01FastDFS极速入门与安装/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">new和delete</span>
+                <span class="level-item">开源组件:FastDFS极速入门与安装</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2015/07/16/02函数重载/">
-                <span class="level-item">函数重载</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/05/27/开源组件06定时任务框架Quartz(二)/">
+                <span class="level-item">开源组件:定时任务框架Quartz(二)</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1587,7 +1592,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="内联函数" height="28">
+                    <img src="/images/logo.svg" alt="开源组件:定时任务框架Quartz(一)" height="28">
                 
                 </a>
                 <p class="is-size-7">
