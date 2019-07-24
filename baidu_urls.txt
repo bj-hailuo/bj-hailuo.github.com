@@ -13,12 +13,12 @@ http://www.haoservice.cn/2019/04/05/DSA04二叉树创建插入删除实现/
 http://www.haoservice.cn/2019/04/04/DSA03二分钟初识树/
 http://www.haoservice.cn/2019/04/02/开源组件两分钟搞懂开源许可协议/
 http://www.haoservice.cn/2019/04/02/DSA01通俗易懂说链表/
-http://www.haoservice.cn/2019/03/21/Qt01第一个Qt程序Hello World/
 http://www.haoservice.cn/2019/03/21/Qt02更改应用程序图标和任务栏图标/
+http://www.haoservice.cn/2019/03/21/Qt01第一个Qt程序Hello World/
 http://www.haoservice.cn/2019/01/08/开源组件04Git分支管理/
 http://www.haoservice.cn/2019/01/08/开源组件03Git简介与基本操作/
-http://www.haoservice.cn/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/
 http://www.haoservice.cn/2018/11/16/Applied03纯C++实现操作配置文件(告别跨平台问题)/
+http://www.haoservice.cn/2018/11/16/Applied04C++操作文件行(读取，删除，修改指定行)/
 http://www.haoservice.cn/2018/11/06/Docker02docker安装ELK/
 http://www.haoservice.cn/2018/10/16/Applied05基于libcurl实现REST风格http-https的get和post/
 http://www.haoservice.cn/2018/07/09/Docker04docker安装redis/
@@ -45,6 +45,8 @@ http://www.haoservice.cn/2017/01/10/SB04配置文件详解properties/
 http://www.haoservice.cn/2017/01/10/SB03使用devtools实现热部署/
 http://www.haoservice.cn/2017/01/08/SB02创建第一个web工程helloworld/
 http://www.haoservice.cn/2017/01/08/SB01Eclipse安装spring-tool-suite插件/
+http://www.haoservice.cn/2015/07/24/16指针函数与函数指针/
+http://www.haoservice.cn/2015/07/24/15指针数组和数组指针/
 http://www.haoservice.cn/2015/07/18/14赋值兼容/
 http://www.haoservice.cn/2015/07/18/13虚继承/
 http://www.haoservice.cn/2015/07/18/12类的继承/
