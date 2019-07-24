@@ -1,3 +1,5 @@
+http://www.haoservice.cn/2019/07/24/开源组件06定时任务框架Quartz(二)/
+http://www.haoservice.cn/2019/07/24/开源组件05定时任务框架Quartz(一)/
 http://www.haoservice.cn/2019/07/18/博文导航/
 http://www.haoservice.cn/2019/07/12/Applied11基于Snappy实现数据压缩和解压/
 http://www.haoservice.cn/2019/05/14/Qt10vs2017+qt5.x编译32位应用/
