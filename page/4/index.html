@@ -323,7 +323,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 306 个字)
+                    9 分钟 读完 (大约 1302 个字)
                 </span>
                 
                 
@@ -332,26 +332,21 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2018/05/27/开源组件05定时任务框架Quartz(一)/">开源组件:定时任务框架Quartz(一)</a>
+                <a class="has-link-black-ter" href="/2018/05/27/开源组件06定时任务框架Quartz(二)/">开源组件:定时任务框架Quartz(二)</a>
             
         </h1>
         <div class="content">
-            <p>Quartz是OpenSymphony开源组织的一个开源项目，定时任务框架，纯Java语言实现，最新版本为2.3.0。</p>
-<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><p>Quartz中使用的设计模式如下：</p>
-<pre><code>1.Builder模式
-
-2.Factory模式
-
-3.组件模式
-
-4.链式模式</code></pre>
+            <p>上一篇文章完成了第一个Quartz程序的编写，这篇从Quartz中的几个重要对象来更深一层认识Quartz框架。</p>
+<h3 id="Job和JobDetail"><a href="#Job和JobDetail" class="headerlink" title="Job和JobDetail"></a>Job和JobDetail</h3><p>Job是Quartz中的一个接口，接口下只有execute方法，在这个方法中编写业务逻辑。</p>
+<p>该接口的源码：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package org.quartz;</span><br><span class="line"> </span><br><span class="line">public interface Job &#123;</span><br><span class="line">    void execute(JobExecutionContext var1) throws JobExecutionException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2018/05/27/开源组件05定时任务框架Quartz(一)/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/2018/05/27/开源组件06定时任务框架Quartz(二)/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -383,7 +378,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1302 个字)
+                    2 分钟 读完 (大约 306 个字)
                 </span>
                 
                 
@@ -392,21 +387,26 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2018/05/27/开源组件06定时任务框架Quartz(二)/">开源组件:定时任务框架Quartz(二)</a>
+                <a class="has-link-black-ter" href="/2018/05/27/开源组件05定时任务框架Quartz(一)/">开源组件:定时任务框架Quartz(一)</a>
             
         </h1>
         <div class="content">
-            <p>上一篇文章完成了第一个Quartz程序的编写，这篇从Quartz中的几个重要对象来更深一层认识Quartz框架。</p>
-<h3 id="Job和JobDetail"><a href="#Job和JobDetail" class="headerlink" title="Job和JobDetail"></a>Job和JobDetail</h3><p>Job是Quartz中的一个接口，接口下只有execute方法，在这个方法中编写业务逻辑。</p>
-<p>该接口的源码：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package org.quartz;</span><br><span class="line"> </span><br><span class="line">public interface Job &#123;</span><br><span class="line">    void execute(JobExecutionContext var1) throws JobExecutionException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>Quartz是OpenSymphony开源组织的一个开源项目，定时任务框架，纯Java语言实现，最新版本为2.3.0。</p>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><p>Quartz中使用的设计模式如下：</p>
+<pre><code>1.Builder模式
+
+2.Factory模式
+
+3.组件模式
+
+4.链式模式</code></pre>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2018/05/27/开源组件06定时任务框架Quartz(二)/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/2018/05/27/开源组件05定时任务框架Quartz(一)/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -952,12 +952,12 @@
             </li>
         
             <li>
-                <a class="level is-mobile" href="http://www.javaboy.cn" target="_blank">
+                <a class="level is-mobile" href="http://www.javaboy.org" target="_blank">
                     <span class="level-left">
                         <span class="level-item">江南一点雨</span>
                     </span>
                     <span class="level-right">
-                        <span class="level-item tag">www.javaboy.cn</span>
+                        <span class="level-item tag">www.javaboy.org</span>
                     </span>
                 </a>
             </li>
